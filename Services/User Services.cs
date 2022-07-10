@@ -1,13 +1,14 @@
 ﻿using Models;
-using Repository;
+using UserRepo;
 
 namespace UserServices
 {
     public class UserService
     {
-        private UserRepository userRepo = new UserRepo();
+        private UserRepository userRepo = new UserRepository();
 
-        public List<Users> GetAllUsers(){
+        public List<Users> GetAllUsers()
+        {
             return userRepo.GetAllUsers();
         }
         /*

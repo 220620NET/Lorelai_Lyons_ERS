@@ -8,7 +8,7 @@ public class Users                              //to define the user class.
     private string password { get; set; }       //Custom defined employee login password.
     public string role { get; set; }            //Enter employee role                                   
     
-    public getUser(string legalName, int userID, string userName, string password, string role)//use for accessing DB          
+    public Users(string legalName, int userID, string userName, string password, string role)//use for accessing DB          
     {
         this.legalName = legalName;
         this.userID = userID;                            
@@ -17,7 +17,7 @@ public class Users                              //to define the user class.
         this.role = role;                                        
     }
 
-    public enterUser(string legalName, string userName, string password, string role)//used for entering information into DB          
+    public Users(string legalName, string userName, string password, string role)//used for entering information into DB          
     {
         this.legalName = legalName;                          
         this.userName = userName;                                    
@@ -27,6 +27,6 @@ public class Users                              //to define the user class.
 
     public override string ToString()
     {
-        return "userID: " + this.userID + "\t LegalName" + this.legalName + "\t Username: " + this.username + "\t Role: " + this.role;
+        return "userID: " + this.userID + "\t LegalName" + this.legalName + "\t Username: " + this.userName + "\t Role: " + this.role;
     }
 }

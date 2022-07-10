@@ -45,7 +45,9 @@ public class MainMenu
         Ticket newTix = new Ticket(10.00M);
         Console.WriteLine(newTix.amount);
         */
-        List<Users> usersInRepo = UserRepository.GetAllUsers();
+        UserService userServices = new UserService();
+
+        List<Users> usersInRepo = userServices.GetAllUsers();
             foreach (Users users in usersInRepo)
             {
                 Console.WriteLine(users);
