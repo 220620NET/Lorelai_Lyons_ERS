@@ -19,3 +19,9 @@ create table Lor_P1.tickets(
 		ticket_fk varchar(50) foreign key references Lor_P1.users(username),
 		primary key (ticket_ID)
 );
+
+insert into Lor_P1.users (legalname, username, password, role) values ('Laura', 'TheFakeLorLyons', 'P@ssw0rd!', 'manager');
+
+insert into Lor_P1.users (legalname, username, password, role) values ('Lor', 'AnandamayiSoma', 'P@ssw0rd!', 'employee');
+
+select * from Lor_P1.users

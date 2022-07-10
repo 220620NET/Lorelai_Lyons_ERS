@@ -1,4 +1,6 @@
 ﻿using Models;
+using UserServices;
+using UserRepo;
 using System;
 using System.IO;
 using System.Text;
@@ -11,6 +13,7 @@ public class MainMenu
     public void Begin()
     {
         {
+        /*
         Console.WriteLine("This is the employee reimbursement system");
         Console.WriteLine("To begin, please enter your full name as you wish for it to appear in our records: \n");
 
@@ -41,10 +44,9 @@ public class MainMenu
 
         Ticket newTix = new Ticket(10.00M);
         Console.WriteLine(newTix.amount);
-
-        List<Users> userList = UserRepository.GetAllUsers();
-            Console.WriteLine($"Amount of Todos: {userList.Count()}");
-            foreach (Users users in userList)
+        */
+        List<Users> usersInRepo = UserRepository.GetAllUsers();
+            foreach (Users users in usersInRepo)
             {
                 Console.WriteLine(users);
             }

@@ -2,38 +2,31 @@
 
 public class Users                              //to define the user class.
 {
-    public int userID{ get; set; }             //Unique employee ID number. 
-    public string legalName{ get; set; }       //Employee's legal name     
-    public string userName{ get; set; }        //Unique and custom employee login username.
-    private string password{ get; set; }       //Custom defined employee login password.
-    public string role{ get; set; }            //Enter employee role                                   
+    public int userID { get; set; }             //Unique employee ID number. 
+    public string legalName { get; set; }       //Employee's legal name     
+    public string userName { get; set; }        //Unique and custom employee login username.
+    private string password { get; set; }       //Custom defined employee login password.
+    public string role { get; set; }            //Enter employee role                                   
     
-    //public User()                              //Constructor for the user class.           
-    //{
-        //legalName = "";
-       // userID = 0;                            
-        //userName = "";                                    
-        //password = "";                         //   "    "                             
-        //role = "";                                        
-    //}
-
-    public void SetLegalName(string legalnameToSet)
+    public getUser(string legalName, int userID, string userName, string password, string role)//use for accessing DB          
     {
-        this.legalName = legalnameToSet;
+        this.legalName = legalName;
+        this.userID = userID;                            
+        this.userName = userName;                                    
+        this.password = password;                         //   "    "                             
+        this.role = role;                                        
     }
 
-    public void SetUserName(string usernameToSet)  //Setname method allows user to choose login username.
+    public enterUser(string legalName, string userName, string password, string role)//used for entering information into DB          
     {
-        this.userName = usernameToSet;
+        this.legalName = legalName;                          
+        this.userName = userName;                                    
+        this.password = password;                         //   "    "                             
+        this.role = role;                                        
     }
 
-    public void SetPass(string customPass)        //SetPass method allows user to choose password name.
+    public override string ToString()
     {
-        this.password = customPass;
-    }
-
-    public void SetRole(string userRole)          //SetRole method allows user to enter employee role
-    {
-        this.role = userRole;
+        return "userID: " + this.userID + "\t LegalName" + this.legalName + "\t Username: " + this.username + "\t Role: " + this.role;
     }
 }

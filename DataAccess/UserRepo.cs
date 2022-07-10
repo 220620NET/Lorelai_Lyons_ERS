@@ -1,12 +1,13 @@
-﻿using SensitiveVariables;
-using Models;
+﻿using Models;
+using Sensitive;
+using System;
 using System.Data.SqlClient; //to use this I need to go to git and use command 'git add package System.Data.SqlClient'
 
 namespace UserRepo
 {
     public class UserRepository
     {
-        string ConnectionString = "Server=tcp:lorserver.database.windows.net,1433;Initial Catalog=Lor's First Server;Persist Security Info=False;User ID=sqluser;Password=@dbpassword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        string connectionString = "Server=tcp:lorserver.database.windows.net,1433;Initial Catalog=Lor's First Server;Persist Security Info=False;User ID=sqluser;Password=" + SensitiveVariables.dbPassword + ";MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
         public List<Users> GetallUsers()
         {
@@ -14,20 +15,21 @@ namespace UserRepo
         
             string queryString = "select * from Lor_P1.users;";
 
-            SqlConnection connection = new SqlConnection(connectionString);
+            SqlConnection dbConnect = new SqlConnection(connectionString);
 
-            SqlCommand command = new SqlCommand(QueryString, connection);                 //datatype for the active connection
+            SqlCommand returnUsers = new SqlCommand(queryString, dbConnect);                 //datatype for the active connection
 
             try
             {
-                connection.Open();                                                        //opens connection to the database
-                SqlDataReader reader = command.ExecuteReader();                           //Stores the result set of a SQL statement into a variable 
+                dbConnect.Open();                                                        //opens connection to the database
+                SqlDataReader reader = returnUsers.ExecuteReader();                           //Stores the result set of a SQL statement into a variable 
                 while (reader.Read())
                 {
-                    Console.WriteLine("\t{0}\t{1}\t{2}", reader[0], reader[1], reader[2]);//based on number of columns!!!!users = 5? tickets = 7?
+                    Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}", reader[0], reader[1], reader[2], reader[3], reader[4]);//based on number of columns!!!!users = 5? tickets = 7?
+                    usersInRepo.Add(new User((string)reader[0], (int)reader[1], (string)reader[2], (string)reader[3], (string)reader[4]));
                 }
                 reader.Close();                                                           //closees connection to the database. Important!
-                connection.Close();                                                       //closes connection to server
+                dbConnect.Close();                                                       //closes connection to server
             }
             catch (Exception ex)                                                          //If the connection fails
             {
