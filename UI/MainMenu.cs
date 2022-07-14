@@ -1,6 +1,8 @@
 ﻿using Models;
 using UserServices;
+using TicketServices;
 using UserRepo;
+using TicketRepo;
 using System;
 using System.IO;
 using System.Text;
@@ -47,11 +49,20 @@ public class MainMenu
         */
         UserService userServices = new UserService();
 
+        TicketService ticketServices = new TicketService();
+
         List<Users> usersInRepo = userServices.GetAllUsers();
             foreach (Users users in usersInRepo)
             {
                 Console.WriteLine(users);
             }
+
+        List<Ticket> ticketsInRepo = ticketServices.GetAllTickets();
+            foreach (Ticket tickets in ticketsInRepo)
+            {
+                Console.WriteLine(tickets);
+            }
+        
         }
     }
 }

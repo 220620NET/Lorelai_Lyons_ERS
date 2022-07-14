@@ -25,3 +25,5 @@ insert into Lor_P1.users (legalname, username, password, role) values ('Laura', 
 insert into Lor_P1.users (legalname, username, password, role) values ('Lor', 'AnandamayiSoma', 'P@ssw0rd!', 'employee');
 
 select * from Lor_P1.users
+
+insert into Lor_P1.tickets (author, resolver, description, manager_note, amount) values ('Lorelai', 'Pending', 'Travel expenses', 'nothing', '10.57');

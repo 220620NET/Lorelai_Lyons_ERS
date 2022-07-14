@@ -1,66 +1,72 @@
-﻿using Models;
 using Sensitive;
+using Models;
 using System;
 using System.Data.SqlClient; //to use this I need to go to git and use command 'git add package System.Data.SqlClient'
 
-namespace UserRepo
+namespace TicketRepo
 {
-    public class UserRepository : UsersDAO
+    public class TicketRepository : TicketDAO
     {
         string connectionString = "Server=tcp:lorserver.database.windows.net,1433;Initial Catalog=Lor's First Server;Persist Security Info=False;User ID=sqluser;Password=" + SensitiveVariables.dbPassword + ";MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
-        public List<Users> GetAllUsers()
+        public List<Ticket> GetAllTickets() //eventually this will not even be a method
         {
-            List<Users> usersInRepo = new List<Users>();
-        
-            string queryString = "select * from Lor_P1.users;";
+            List<Ticket> ticketsInRepo = new List<Ticket>();
+            
+            string queryString = "select * from Lor_P1.tickets;";
 
-            SqlConnection dbConnect = new SqlConnection(connectionString);
+            SqlConnection connection = new SqlConnection(connectionString);
 
-            SqlCommand returnUsers = new SqlCommand(queryString, dbConnect);                 //datatype for the active connection
+            SqlCommand command = new SqlCommand(queryString, connection);                 //datatype for the active connection
 
             try
             {
-                dbConnect.Open();                                                        //opens connection to the database
-                SqlDataReader reader = returnUsers.ExecuteReader();                           //Stores the result set of a SQL statement into a variable 
+                connection.Open();                                                        //opens connection to the database
+                SqlDataReader reader = command.ExecuteReader();                           //Stores the result set of a SQL statement into a variable 
                 while (reader.Read())
                 {
-                    Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}", reader[0], reader[1], reader[2], reader[3], reader[4]);//based on number of columns!!!!
-                    usersInRepo.Add(new Users((int)reader[0], (string)reader[1], (string)reader[2], (string)reader[3], (string)reader[4]));
+                    Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}", reader[0], reader[1], reader[2], reader[3], reader[4], reader[5]);//based on number of columns!!!!
+                    ticketsInRepo.Add(new Ticket((int)reader[0], (string)reader[1], (string)reader[2], (string)reader[3], (string)reader[4], (double)reader[5]));
                 }
                 reader.Close();                                                           //closees connection to the database. Important!
-                dbConnect.Close();                                                       //closes connection to server
+                connection.Close();                                                       //closes connection to server
             }
             catch (Exception ex)                                                          //If the connection fails
             {
                 Console.WriteLine(ex.Message);                                            //Displays error message
             }
-            return usersInRepo;                                                           //Keeps content displayed until exit
+            return ticketsInRepo;                                                           //Keeps content displayed until exit
         }
 
-        public List<Users> GetUserByUsername(string userName)
+        public List<Ticket> GetTicketByAuthor(string author)
         {
             return null;
         }
 
-        public List<Users> GetUserById(int userID)
+        public List<Ticket> GetTicketByTicketId(int ticketId)
         {
             return null;
         }
 
-        public bool CreateUser(Users users)
+        public List<Ticket> GetTicketByTicketStatus(string resolver)//going to change to enum
+        {
+            return null;
+        }
+
+        public bool CreateTicket(Ticket tickets)
+        {
+            return false;
+        }
+
+        public bool UpdateTicket(Ticket tickets)
         {
             return false;
         }
     }
-}
+} 
 
-
-
-
-            /*
-            *******Notes Below******
-            public bool CreateTodo(Todo todo){
+/*
+        public bool CreateTodo(Todo todo){
             //this defines the sql operation we would like to do
             string sql = "insert into todoapp.todos (description) values (@description);";
 
@@ -95,10 +101,8 @@ namespace UserRepo
 
 
             return false;
-        }*/
-        
-
-
+        }
+  
 
 //TodoDAO todoDAO = new TodoDao();
 
@@ -108,9 +112,9 @@ namespace UserRepo
         
         //todoDAO.DeleteTodo(2);                           //DELETING A LINE FROM THE DB using DeleteTodo method
 
-        //List<Todo> todos = todoDAO.GetAllTodos();        //using our getall method
-
         //foreach(Todo todo in todos)                      //displaying the results from getall
-        //{
-        //    Console.WriteLine(todo);
-        //} 
+            //{
+            //    Console.WriteLine(todo);
+            //} 
+
+*/
