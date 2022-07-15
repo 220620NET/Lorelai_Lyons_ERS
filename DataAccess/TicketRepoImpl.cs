@@ -1,21 +1,31 @@
-using Sensitive;
 using Models;
 using System;
+using System.Data;
 using System.Data.SqlClient; //to use this I need to go to git and use command 'git add package System.Data.SqlClient'
 
-namespace TicketRepo
+namespace DataAccess
 {
     public class TicketRepository : TicketDAO
     {
-        string connectionString = "Server=tcp:lorserver.database.windows.net,1433;Initial Catalog=Lor's First Server;Persist Security Info=False;User ID=sqluser;Password=" + SensitiveVariables.dbPassword + ";MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        private readonly ConnectionFactory _connectionFactory;
 
+        public TicketRepository()
+        {
+            _connectionFactory = ConnectionFactory.GetInstance(File.ReadAllText("../DataAccess/connectionString.txt"));
+        }
+
+        public TicketRepository(ConnectionFactory factory)
+        {
+            _connectionFactory = factory;
+        }
+        
         public List<Ticket> GetAllTickets() //eventually this will not even be a method
         {
             List<Ticket> ticketsInRepo = new List<Ticket>();
             
             string queryString = "select * from Lor_P1.tickets;";
 
-            SqlConnection connection = new SqlConnection(connectionString);
+            SqlConnection connection = _connectionFactory.GetConnection();
 
             SqlCommand command = new SqlCommand(queryString, connection);                 //datatype for the active connection
 

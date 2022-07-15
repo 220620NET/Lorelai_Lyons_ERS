@@ -1,5 +1,5 @@
 ﻿using Models;
-using UserRepo;
+using DataAccess;
 
 namespace UserServices
 {

@@ -1,21 +1,31 @@
 ﻿using Models;
-using Sensitive;
 using System;
+using System.Data;
 using System.Data.SqlClient; //to use this I need to go to git and use command 'git add package System.Data.SqlClient'
 
-namespace UserRepo
+namespace DataAccess
 {
     public class UserRepository : UsersDAO
     {
-        string connectionString = "Server=tcp:lorserver.database.windows.net,1433;Initial Catalog=Lor's First Server;Persist Security Info=False;User ID=sqluser;Password=" + SensitiveVariables.dbPassword + ";MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        private readonly ConnectionFactory _connectionFactory;
 
+        public UserRepository()
+        {
+            _connectionFactory = ConnectionFactory.GetInstance(File.ReadAllText("../DataAccess/connectionString.txt"));
+        }
+
+        public UserRepository(ConnectionFactory factory)
+        {
+            _connectionFactory = factory;
+        }
+        
         public List<Users> GetAllUsers()
         {
             List<Users> usersInRepo = new List<Users>();
         
             string queryString = "select * from Lor_P1.users;";
 
-            SqlConnection dbConnect = new SqlConnection(connectionString);
+            SqlConnection dbConnect = _connectionFactory.GetConnection();
 
             SqlCommand returnUsers = new SqlCommand(queryString, dbConnect);                 //datatype for the active connection
 

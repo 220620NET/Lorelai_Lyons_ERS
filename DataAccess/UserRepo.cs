@@ -1,8 +1,7 @@
 using Models;
-using Sensitive;
 using System.Data.SqlClient;
 
-namespace UserRepo
+namespace DataAccess
 {
     public interface UsersDAO
     {
