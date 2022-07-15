@@ -19,56 +19,67 @@ namespace DataAccess
             _connectionFactory = factory;
         }
         
-        public List<Ticket> GetAllTickets() //eventually this will not even be a method
+        public List<Tickets> GetAllTickets()                                             //eventually this will not even be a method
         {
-            List<Ticket> ticketsInRepo = new List<Ticket>();
+            List<Tickets> ticketsInRepo = new List<Tickets>();
             
             string queryString = "select * from Lor_P1.tickets;";
 
-            SqlConnection connection = _connectionFactory.GetConnection();
+            SqlConnection dbConnect = _connectionFactory.GetConnection();
 
-            SqlCommand command = new SqlCommand(queryString, connection);                 //datatype for the active connection
+            SqlCommand command = new SqlCommand(queryString, dbConnect);                 //datatype for the active connection
 
             try
             {
-                connection.Open();                                                        //opens connection to the database
-                SqlDataReader reader = command.ExecuteReader();                           //Stores the result set of a SQL statement into a variable 
+                dbConnect.Open();                                                        //opens connection to the database
+                SqlDataReader reader = command.ExecuteReader();                          //Stores the result set of a SQL statement into a variable 
                 while (reader.Read())
                 {
-                    Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}", reader[0], reader[1], reader[2], reader[3], reader[4], reader[5]);//based on number of columns!!!!
-                    ticketsInRepo.Add(new Ticket((int)reader[0], (string)reader[1], (string)reader[2], (string)reader[3], (string)reader[4], (double)reader[5]));
+                    Tickets ticketTest = new Tickets();
+
+                    Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}", reader[0], reader[1], reader[2], reader[3], reader["status"], reader[5], reader[6]);//based on number of columns!!!!
+                    ticketsInRepo.Add(new Tickets
+                    (
+                     (int)reader[0],
+                     (int)reader[1],
+                     (int)reader[2],
+                     (string)reader[3],
+                     ticketTest.StringToStatus((string)reader["status"]),
+                     (string)reader[5],
+                     (decimal)reader[6]
+                    ));
                 }
-                reader.Close();                                                           //closees connection to the database. Important!
-                connection.Close();                                                       //closes connection to server
+                reader.Close();                                                          //closees connection to the database. Important!
+                dbConnect.Close();                                                       //closes connection to server
             }
-            catch (Exception ex)                                                          //If the connection fails
+            catch (Exception ex)                                                         //If the connection fails
             {
-                Console.WriteLine(ex.Message);                                            //Displays error message
+                Console.WriteLine(ex.Message);                                           //Displays error message
             }
-            return ticketsInRepo;                                                           //Keeps content displayed until exit
+            return ticketsInRepo;                                                        //Keeps content displayed until exit
         }
 
-        public List<Ticket> GetTicketByAuthor(string author)
+        public List<Tickets> GetTicketByAuthor(int authorId)                             //
         {
             return null;
         }
 
-        public List<Ticket> GetTicketByTicketId(int ticketId)
+        public List<Tickets> GetTicketByTicketId(int ticketId)                           //
         {
             return null;
         }
 
-        public List<Ticket> GetTicketByTicketStatus(string resolver)//going to change to enum
+        public List<Tickets> GetTicketByTicketStatus(Status status)                      //
         {
             return null;
         }
 
-        public bool CreateTicket(Ticket tickets)
+        public bool CreateTicket(Tickets ticket)
         {
             return false;
         }
 
-        public bool UpdateTicket(Ticket tickets)
+        public bool UpdateTicket(Tickets ticket)
         {
             return false;
         }

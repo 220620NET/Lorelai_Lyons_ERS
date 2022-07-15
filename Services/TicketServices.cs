@@ -7,7 +7,7 @@ namespace TicketServices
     {
         private TicketRepository ticketRepo = new TicketRepository();
 
-        public List<Ticket> GetAllTickets()
+        public List<Tickets> GetAllTickets()
         {
             return ticketRepo.GetAllTickets();
         }

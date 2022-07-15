@@ -35,8 +35,17 @@ namespace DataAccess
                 SqlDataReader reader = returnUsers.ExecuteReader();                           //Stores the result set of a SQL statement into a variable 
                 while (reader.Read())
                 {
+                    Users testUser = new Users();
+
                     Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}", reader[0], reader[1], reader[2], reader[3], reader[4]);//based on number of columns!!!!
-                    usersInRepo.Add(new Users((int)reader[0], (string)reader[1], (string)reader[2], (string)reader[3], (string)reader[4]));
+                    usersInRepo.Add(new Users
+                    (
+                     (int)reader[0],
+                     (string)reader[1],
+                     (string)reader[2],
+                     (string)reader[3],
+                     testUser.StringToRole((string)reader["role"])
+                    ));
                 }
                 reader.Close();                                                           //closees connection to the database. Important!
                 dbConnect.Close();                                                       //closes connection to server
@@ -58,7 +67,7 @@ namespace DataAccess
             return null;
         }
 
-        public bool CreateUser(Users users)
+        public bool CreateUser(Users user)
         {
             return false;
         }

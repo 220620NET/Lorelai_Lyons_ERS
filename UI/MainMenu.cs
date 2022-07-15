@@ -51,15 +51,15 @@ public class MainMenu
         TicketService ticketServices = new TicketService();
 
         List<Users> usersInRepo = userServices.GetAllUsers();
-            foreach (Users users in usersInRepo)
+            foreach (Users user in usersInRepo)
             {
-                Console.WriteLine(users);
+                Console.WriteLine(user);
             }
 
-        List<Ticket> ticketsInRepo = ticketServices.GetAllTickets();
-            foreach (Ticket tickets in ticketsInRepo)
+        List<Tickets> ticketsInRepo = ticketServices.GetAllTickets();
+            foreach (Tickets ticket in ticketsInRepo)
             {
-                Console.WriteLine(tickets);
+                Console.WriteLine(ticket);
             }
         
         }

@@ -1,30 +1,66 @@
 namespace Models;                             //This page contains the necessary components
                                               //for the Tickets to be submitted.
-public class Ticket                           //Ticket class...
+public enum Status
+{
+    Pending,
+    Approved,
+    Denied
+}
+
+public class Tickets                          //Tickets class...
 {
     public int ticketId { get; set; }         //Unique TicketID number for search and organization.
-    public string author { get; set; }        //Name of the creator of the ticket submission.
-    public string resolver { get; set; }      //Whether the ticket will be approved or not.
+    public int authorId { get; set; }         //Name of the creator of the ticket submission.
+    public int resolverId { get; set; }       //Whether the ticket will be approved or not.
     public string description { get; set; }   //Description of expenses to be reimbursed.
-    public string managerNote { get; set; }   //Manager can ask for more information or provide detail.
-    public double amount { get; set; }       //Total amount of money to be reimbursed.
+    public Status status { get; set; }
+    public string managerNote { get; set; }   //Manager can ask for more information or provide detail on why a claim may be denied.
+    public decimal amount { get; set; }        //Total amount of money to be reimbursed.
 
-    public Ticket(int ticketId, string author, string resolver, string description, string managerNote, double amount)//use for accessing DB          
+    public Tickets() {}
+
+    public Tickets(int ticketId, int authorId, int resolverId, string description, Status status, string managerNote, decimal amount)//use for accessing DB          
     {
         this.ticketId = ticketId;
-        this.author = author;                            
-        this.resolver = resolver;                                    
-        this.description = description;                         //   "    "                             
+        this.authorId = authorId;                            
+        this.resolverId = resolverId;                                    
+        this.description = description;
+        this.status = status;                 //   "    "                             
         this.managerNote = managerNote;
         this.amount = amount;                                        
     }
 
-    public Ticket(string author, string resolver, string description, string managerNote, double amount)//used for entering information into DB          
+    public Tickets(int authorId, int resolverId, string description, Status status, string managerNote, decimal amount)//used for entering information into DB          
     {
-        this.author = author;                            
-        this.resolver = resolver;                                    
-        this.description = description;                         //   "    "                             
+        this.authorId = authorId;                            
+        this.resolverId = resolverId;                                    
+        this.description = description;       //   "    "
+        this.status = status;                             
         this.managerNote = managerNote;
         this.amount = amount;                                       
+    }
+
+    public Status StringToStatus(string input)
+    {
+        Dictionary<string,Status> dictStatus = new Dictionary<string, Status>()
+        {
+            {"Pending", Status.Pending},
+            {"Approved", Status.Approved},
+            {"Denied", Status.Denied}
+        };
+
+        return dictStatus[input];
+    }
+
+    public string StatusToString(Status input)
+    {
+        Dictionary<Status,string> dictStatus = new Dictionary<Status, string>()
+        {
+            {Status.Pending, "Pending"},
+            {Status.Approved, "Approved"},
+            {Status.Denied, "Denied"}
+        };
+
+        return dictStatus[input];
     }
 }
