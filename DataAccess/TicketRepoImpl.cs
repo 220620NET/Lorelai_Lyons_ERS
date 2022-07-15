@@ -5,7 +5,7 @@ using System.Data.SqlClient; //to use this I need to go to git and use command '
 
 namespace DataAccess
 {
-    public class TicketRepository : TicketDAO
+    public class TicketRepository : ITicketDAO
     {
         private readonly ConnectionFactory _connectionFactory;
 
