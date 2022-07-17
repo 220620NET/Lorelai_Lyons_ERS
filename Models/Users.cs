@@ -11,7 +11,7 @@ public class Users                            //Define the user class.
     public int userId { get; set; }           //Unique employee ID number. 
     public string legalName { get; set; }     //Employee's legal name.     
     public string userName { get; set; }      //Unique and custom employee login username.
-    private string password { get; set; }     //Custom defined employee login password.
+    public string password { get; set; }     //Custom defined employee login password.
     public Role role { get; set; }            //Enter employee role.
 
     public Users() {}                                   

@@ -2,3 +2,4 @@ bin
 obj
 Sensitive
 connectionString.txt
+appsettings.Development.json

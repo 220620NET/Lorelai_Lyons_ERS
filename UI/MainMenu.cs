@@ -1,6 +1,6 @@
-﻿using Models;
-using UserServices;
-using TicketServices;
+﻿using Exceptions;
+using Models;
+using Services;
 using DataAccess;
 using System;
 using System.IO;
@@ -15,53 +15,137 @@ public class MainMenu
     {
         {
         /*
-        Console.WriteLine("This is the employee reimbursement system");
-        Console.WriteLine("To begin, please enter your full name as you wish for it to appear in our records: \n");
-
-        User employee1 =  new User();
-
-        employee1.SetLegalName(Console.ReadLine());
-
-        Console.WriteLine("You entered " + $": {employee1.legalName}\n" + " is that correct? Y/N \n");
-
-        Console.WriteLine("Please enter your Username");
-
-        employee1.SetUserName(Console.ReadLine());
-
-        Console.WriteLine("You entered " + $": {employee1.userName}\n" + " is that correct? Y/N \n");
-
-        Console.WriteLine("Please enter your role");
-
-        employee1.SetRole(Console.ReadLine());
-
-        Console.WriteLine("You entered " + $": {employee1.role}\n" + " is that correct? Y/N \n");
-
-        Console.WriteLine("Your legal name is " + $": {employee1.legalName}");
-        Console.WriteLine("Your username is " + $": {employee1.userName}");
-        Console.WriteLine("Your role is " + $": {employee1.role}");
-        Console.WriteLine("Your user ID number is " + $": {employee1.userID}");
-
-        Console.WriteLine("Is all of that correct?");
-
-        Ticket newTix = new Ticket(10.00M);
-        Console.WriteLine(newTix.amount);
+        private readonly AuthServices _auth;
+        public FirstScreen(AuthServices auth)
+        {
+            _auth = auth;
+        }    
         */
-        UserService userServices = new UserService();
+        bool running = true;
 
-        TicketService ticketServices = new TicketService();
-
-        List<Users> usersInRepo = userServices.GetAllUsers();
-            foreach (Users user in usersInRepo)
+        while(running == true)
             {
-                Console.WriteLine(user);
-            }
+            Console.WriteLine("Employee Reimbursement System [ERS]\n1) Get all usrs\n2) Register\n3) GetUserByUserName\n0) EXIT");
 
-        List<Tickets> ticketsInRepo = ticketServices.GetAllTickets();
-            foreach (Tickets ticket in ticketsInRepo)
-            {
-                Console.WriteLine(ticket);
+            AuthService authServices = new AuthService();
+
+            UserService userServices = new UserService();
+
+            TicketService ticketServices = new TicketService();
+
+            string? mainInput = Console.ReadLine();
+
+            switch (mainInput)
+                {
+                case "1":
+
+                    List<Users> usersInRepo = userServices.GetAllUsers();
+                    foreach (Users user in usersInRepo)
+                    {
+                        Console.WriteLine(user);
+                    }
+
+                    List<Tickets> ticketsInRepo = ticketServices.GetAllTickets();
+                    foreach (Tickets ticket in ticketsInRepo)
+                    {
+                        Console.WriteLine(ticket);
+                    }
+
+                    break;
+
+                case "2":
+
+                    Users newUser = new Users();
+                    //Registering a user
+                    Console.WriteLine("Registering a user...\n");
+
+                    Console.WriteLine("Begin by entering your legal name:");
+
+                    newUser.legalName = Console.ReadLine();
+
+                    Console.WriteLine("Please enter a username:");
+
+                    newUser.userName = Console.ReadLine();
+
+                    Console.WriteLine("Please enter a password:");
+
+                    newUser.password = Console.ReadLine();
+                    
+                    Console.WriteLine("Are you an employee? [y/n]:");
+
+                    char roleReader = Console.ReadLine()[0];
+
+                    if(roleReader == 'y')
+                    {
+                        newUser.role = Role.Employee;
+                    }
+                    else
+                    {
+                        newUser.role = Role.Manager;
+                    }
+                    try
+                    {
+                        return authServices.RegisterUser(newUser);
+                    }
+                    catch (InvalidCredentials)
+                    { 
+                        throw new InvalidCredentials("nahhhh.");
+                    } 
+                    
+                    break;
+
+                case "3":
+                    Console.WriteLine("Okay, pls enter a username that you would like to look up:");
+
+                    string input = Console.ReadLine();
+
+                    return userServices.GetUserByUserName(input);
+
+                    break;
+
+                case "0":
+
+                    //exit
+                    running = false;
+                    break;
+
+                default:
+
+                    Console.WriteLine("Invalid Input");
+                    break;
+                }
             }
-        
         }
     }
 }
+
+/*
+
+****some mistakes that might be helpful to have lying around:******
+//Registering a user
+                    Console.WriteLine("Registering a user...\n");
+
+                    Console.WriteLine("Begin by entering your legal name:")
+
+                    string? legalName = Console.ReadLine();
+
+                    Console.WriteLine("Please enter a username:")
+
+                    string? userName = Console.ReadLine();
+
+                    Console.WriteLine("Please enter a password:")
+
+                    string? password = Console.ReadLine();
+
+                    string? role = Console.ReadLine();
+
+                    bool isSuccessful = userServices.RegisterUser(new Users(legalName, userName, password, Role.StringToRole(role)));
+                    
+                    if(isSuccessful){
+                        Console.WriteLine("@userName " + "has successfully activated their account.");
+                    }else{
+                        Console.WriteLine("Invalid input, try again pl0x");
+                    }
+                    
+                    break;
+                    */

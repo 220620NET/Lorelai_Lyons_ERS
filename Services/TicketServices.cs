@@ -1,26 +1,20 @@
 using Models;
 using DataAccess;
 
-namespace TicketServices
+namespace Services
 {
     public class TicketService
     {
-        private TicketRepository ticketRepo = new TicketRepository();
+        private readonly ITicketDAO _ticketDAO;
+        
+        public TicketService(ITicketDAO ticketDAO)
+        {
+            _ticketDAO = ticketDAO;
+        }
 
         public List<Tickets> GetAllTickets()
         {
-            return ticketRepo.GetAllTickets();
+            return _ticketDAO.GetAllTickets();
         }
-        /*
-        public bool CreateUser(Users user){
-            // since there isnt really business logic anywhere in this app, I made up a requirement that descriptions of todos can be only 10 characters long
-            return todoDao.CreateTodo(todo);
-
-        }
-
-        public void DeleteOneTodo(int todoId){
-            todoDao.DeleteOneTodo(todoId);
-        }
-        */
     }
 }

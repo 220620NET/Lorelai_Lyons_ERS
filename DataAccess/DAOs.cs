@@ -5,21 +5,21 @@ namespace DataAccess
 {
     public interface ITicketDAO                              //Interface for the ticket repository.
     {
-        public List<Tickets> GetAllTickets();
-        //public bool CreateTicket(Tickets createTicket);
+        List<Tickets> GetAllTickets();
+        bool CreateTicket(Tickets createTicket);
         //public bool UpdateTicket(Tickets existingTicket);  //maybe change these to new ticket later?
-        //public void DeleteTicket(Tickets existingTicket);
-        //public Tickets GetTicketsById(int ticketId);
-        //public Tickets GetTicketByAuthor(string author);
-        //publick Tickets GetTicketByStatus(string status);
+        //public void DeleteTicket(Tickets existingTicket);  //also I got rid of all the 'publics...
+        List<Tickets> GetTicketByTicketId(int ticketId);          //public may be redundant here?
+        List<Tickets> GetTicketByAuthorId(int authorId);
+        List<Tickets> GetTicketByTicketStatus(Status status);
     }
 
-    public interface IUsersDAO                               //Interface for the user repository.
+    public interface IUserDAO                               //Interface for the user repository.
     {
-        public List<Users> GetAllUsers();
-        //public bool RegisterUser(Users user);
-        //public Users GetUserById(int userId);
-        //public Users GetUserByUserName(string userName);
+        List<Users> GetAllUsers();
+        bool RegisterUser(Users user);
+        Users GetUserByUserId(int userId);
+        Users GetUserByUserName(string userName);
         //public void DeleteAccount(Users user);
     }
 }

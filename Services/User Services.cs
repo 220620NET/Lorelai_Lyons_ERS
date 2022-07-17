@@ -1,26 +1,47 @@
-﻿using Models;
+﻿using Exceptions;
+using Models;
 using DataAccess;
 
-namespace UserServices
+namespace Services
 {
     public class UserService
     {
-        private UserRepository userRepo = new UserRepository();
+        private readonly IUserDAO _userDAO;
+        
+        public UserService(IUserDAO userDAO)
+        {
+            _userDAO = userDAO;
+        }
+
+        //public UserRepository userRepo = new UserRepository(); //I had this as private but changed it to public....
 
         public List<Users> GetAllUsers()
         {
-            return userRepo.GetAllUsers();
-        }
-        /*
-        public bool CreateUser(Users user){
-            // since there isnt really business logic anywhere in this app, I made up a requirement that descriptions of todos can be only 10 characters long
-            return todoDao.CreateTodo(todo);
-
+            return _userDAO.GetAllUsers();
         }
 
-        public void DeleteOneTodo(int todoId){
-            todoDao.DeleteOneTodo(todoId);
+        public Users GetUserByUserName(string userName)
+        {
+            try
+            {
+                return _userDAO.GetUserByUserName(userName);
+            }
+            catch(UsernameNotAvailable)
+            {
+                throw new UsernameNotAvailable();
+            }
         }
-        */
+
+        public Users GetUserByUserId(int userId)
+        {
+            try
+            {
+                return _userDAO.GetUserByUserId(userId);
+            }
+            catch(UsernameNotAvailable)
+            {
+                throw new UsernameNotAvailable();
+            }
+        }
     }
 }
