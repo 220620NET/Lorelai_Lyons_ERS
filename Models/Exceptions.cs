@@ -30,3 +30,13 @@ public class InvalidCredentials : System.Exception
         System.Runtime.Serialization.SerializationInfo info,
         System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 }
+
+public class DuplicateRecord : System.Exception
+{
+    public DuplicateRecord() { }
+    public DuplicateRecord(string message) : base(message) { }
+    public DuplicateRecord(string message, System.Exception inner) : base(message, inner) { }
+    protected DuplicateRecord(
+        System.Runtime.Serialization.SerializationInfo info,
+        System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+}

@@ -33,25 +33,58 @@ public class Users                            //Define the user class.
         this.role = role;                                        
     }
 
+    public Users(string legalName, string userName, string password, int role)
+    {
+        this.legalName = legalName;
+        this.userName = userName;
+        this.password = password;
+        this.role = (Role) role;
+    }
+
+
+    public int RoleToNum(string userEntry)
+    {
+        if(userEntry == "Manager")
+        {
+            return 1;
+        }
+        else { return 0; }
+    }
+
+    public string RoleToString(Role role)
+    {
+        if(role == Role.Employee)
+        {
+            return "Employee";
+        }
+        else { return "Manager"; }
+    }
+
+    public override string ToString()
+    { 
+        return $"UserId: {this.userId}, Legal Name: {this.legalName}, Userame: {this.userName}, Role: {RoleToString(this.role)}";
+    }
+    /*
     public Role StringToRole(string input)
     {
-        Dictionary<string,Role> dictRole = new Dictionary<string, Role>()
+        Dictionary<string,Role> declareRole = new Dictionary<string, Role>()
         {
             {"Employee", Role.Employee},
             {"Manager", Role.Manager}
         };
 
-        return dictRole[input];
+        return declareRole[input];
     }
 
     public String RoleToString(Role input)
     {
-        Dictionary<Role,string> dictRole = new Dictionary<Role, string>()
+        Dictionary<Role,string> declareRole = new Dictionary<Role, string>()
         {
             {Role.Employee, "Employee"},
             {Role.Manager, "Manager"}
         };
 
-        return dictRole[input];
+        return declareRole[input];
     }
+    */
 }

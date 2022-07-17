@@ -30,22 +30,25 @@ namespace DataAccess
 
             SqlCommand returnUsers = new SqlCommand(queryString, dbConnect);             //datatype for the active connection
 
+            Users userInstance = new Users();
+
             try
             {
                 dbConnect.Open();                                                        //opens connection to the database
                 SqlDataReader reader = returnUsers.ExecuteReader();                      //Stores the result set of a SQL statement into a variable 
                 while (reader.Read())
                 {
-                    Users testUser = new Users();
+                    Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}", reader[0], reader[1], reader[2], reader[3]);//based on number of columns!!!!
 
-                    Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}", reader[0], reader[1], reader[2], reader[3], reader[4]);//based on number of columns!!!!
+                    int roleNum = userInstance.RoleToNum((string)reader[4]);
+
                     usersInRepo.Add(new Users
                     (
                      (int)reader[0],
                      (string)reader[1],
                      (string)reader[2],
                      (string)reader[3],
-                     testUser.StringToRole((string)reader["role"])
+                     (Role)roleNum
                     ));
                 }
                 reader.Close();                                                           //closees connection to the database.
@@ -68,7 +71,7 @@ namespace DataAccess
 
             userSearch.Parameters.AddWithValue("@userName", userName);
 
-            Users testUser = new Users();
+            Users userInstance = new Users();
 
             try
             {
@@ -76,12 +79,14 @@ namespace DataAccess
                 SqlDataReader reader = userSearch.ExecuteReader(); 
                 while(reader.Read())
                 {
+                    int roleNum = userInstance.RoleToNum((string)reader[4]);
+                    
                     return new Users
                     {
                         userId = (int)reader["user_ID"],
                         userName = (string)reader["username"],
                         password = (string)reader["password"],
-                        role = testUser.StringToRole((string)reader["role"])
+                        role = (Role)roleNum
                     };
                 }
                 reader.Close();                                                           //closees connection to the database.
@@ -91,7 +96,7 @@ namespace DataAccess
             {
                 throw new InvalidCredentials("Information provided was not in an acceptable format.");//Displays error message.
             }
-            return testUser;
+            return userInstance;
         }
 
         public Users GetUserByUserId(int userId)                                        //Method to search for user by their userId.
@@ -104,7 +109,7 @@ namespace DataAccess
 
             userSearch.Parameters.AddWithValue("@userId", userId);
 
-            Users testUser = new Users();
+            Users userInstance = new Users();
 
             try
             {
@@ -112,12 +117,14 @@ namespace DataAccess
                 SqlDataReader reader = userSearch.ExecuteReader(); 
                 while(reader.Read())
                 {
+                    int roleNum = userInstance.RoleToNum((string)reader[4]);
+                    
                     return new Users
                     {
                         userId = (int)reader["user_ID"],
                         userName = (string)reader["username"],
                         password = (string)reader["password"],
-                        role = testUser.StringToRole((string)reader["role"])
+                        role = (Role)roleNum
                     };
                 }
                 reader.Close();                                                           //closees connection to the database.
@@ -127,7 +134,7 @@ namespace DataAccess
             {
                 throw new InvalidCredentials("Information provided was not in an acceptable format.");//Displays error message.
             }
-            return testUser;
+            return userInstance;
         }
 
         public bool RegisterUser(Users newUser)                                              //Method to register a user.

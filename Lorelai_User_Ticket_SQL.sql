@@ -5,7 +5,7 @@ create table Lor_P1.users(
 		legalName varchar(50)unique not null,
   		userName varchar(50) unique not null,
   		password varchar(50) not null,
-  		role varchar(30) not null check (role in ('Employee', 'Manager')),
+  		role varchar(30) not null check (role in ('Employee', 'Manager')) default 'Employee',
   		primary key (user_ID)
  		);
 
@@ -14,19 +14,19 @@ create table Lor_P1.tickets(
 		author_fk int not null foreign key references Lor_P1.users(user_Id),
 		resolver_fk int not null foreign key references Lor_P1.users(user_Id),
 		description varchar(255) not null,
-		status varchar(8) not null check (status in ('Pending', 'Approved', 'Denied')),
+		status varchar(8) not null check (status in ('Pending', 'Approved', 'Denied')) default 'Pending',
 		manager_note varchar(100),
-		amount decimal,
+		amount double precision,
 		primary key (ticket_ID)
 		);
 
 insert into Lor_P1.users (legalName, userName, password, role) values ('Laura', 'TheFakeLorLyons', 'P@ssw0rd!', 'Manager');
 
-insert into Lor_P1.users (legalName, userName, password, role) values ('Lor', 'AnandamayiSoma', 'P@ssw0rd!', 'Employee');
+insert into Lor_P1.users (legalName, userName, password) values ('Lor', 'AnandamayiSoma', 'P@ssw0rd!');
 
 select * from Lor_P1.users; --checking to ensure my default inputs worked
 
-insert into Lor_P1.tickets (author_fk, resolver_fk, description, status, manager_note, amount) values (2, 1, 'Test Description', 'Pending', 'noteTest', '10.57');
+insert into Lor_P1.tickets (author_fk, resolver_fk, description, manager_note, amount) values (2, 1, 'Test Description', 'noteTest', '10.57');
 
 select * from Lor_P1.tickets; --checking to ensure my default inputs worked
 
