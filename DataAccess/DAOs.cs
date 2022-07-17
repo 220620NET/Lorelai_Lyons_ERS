@@ -7,7 +7,7 @@ namespace DataAccess
     {
         List<Tickets> GetAllTickets();
         bool CreateTicket(Tickets createTicket);
-        //public bool UpdateTicket(Tickets existingTicket);  //maybe change these to new ticket later?
+        bool UpdateTicket(Tickets existingTicket);  //maybe change these to new ticket later?
         //public void DeleteTicket(Tickets existingTicket);  //also I got rid of all the 'publics...
         List<Tickets> GetTicketByTicketId(int ticketId);          //public may be redundant here?
         List<Tickets> GetTicketByAuthorId(int authorId);

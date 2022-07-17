@@ -234,6 +234,7 @@ namespace DataAccess
             changeTicket.Parameters.AddWithValue("@amount", upTicket.amount);
 
             dbConnect.Close();
+            
 
             return true;
         }

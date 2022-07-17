@@ -6,47 +6,39 @@ namespace Services
 {
     public class AuthService
     {
-        
         private readonly IUserDAO _user;
 
         public AuthService(IUserDAO userDAO)
         {
             _user = userDAO;
         }
-        /*
-        public AuthService(IUsersDAO usersDAO)
-        {
-            _user = usersDAO;
-        }
-        */
 
-        /*
-        public Users Login(string username, string password)
+        public Users Login(string userName, string password)
         {
             Users user;
             try
             {
-                user = _user.GetUserByUsername(username);
-                if (user.username == "")
+                user = _user.GetUserByUserName(userName);
+                if (user.userName == "")
                 {
-                    throw new ResourceNotFoundException();
+                    throw new ResourceNotFound();
                 }
                 if (user.password == password)
                 {
                     return user;
                 }
-                else { throw new InvalidCredentialsException(); }
+                else { throw new InvalidCredentials(); }
             }
-            catch (ResourceNotFoundException)
+            catch (ResourceNotFound)
             {
-                throw new ResourceNotFoundException();
+                throw new ResourceNotFound();
             }
-            catch (InvalidCredentialsException)
+            catch (InvalidCredentials)
             {
-                throw new InvalidCredentialsException();
+                throw new InvalidCredentials();
             }
         }
-        */
+        
         public bool RegisterUser(Users newUser)
         {
             try
