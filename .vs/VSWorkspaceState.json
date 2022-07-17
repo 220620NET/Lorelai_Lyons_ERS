@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\DataAccess",
+    "\\ERS_API",
+    "\\Models",
+    "\\Services"
+  ],
+  "SelectedNode": "\\Services\\AuthServices.cs",
+  "PreviewInSolutionExplorer": false
+}

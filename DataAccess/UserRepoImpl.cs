@@ -31,7 +31,6 @@ namespace DataAccess
             SqlCommand returnUsers = new SqlCommand(queryString, dbConnect);             //datatype for the active connection
 
             Users userInstance = new Users();
-
             try
             {
                 dbConnect.Open();                                                        //opens connection to the database
@@ -137,7 +136,7 @@ namespace DataAccess
             return userInstance;
         }
 
-        public bool RegisterUser(Users newUser)                                              //Method to register a user.
+        public Users RegisterUser(Users newUser)                                              //Method to register a user.
         {                                                                                 //*below* SQL Command to enter record information.
             string sqlStmnt = "insert into Lor_P1.users (legalName, userName, password, role) values (@legalName, @userName, @password, @role);";
 
@@ -160,16 +159,24 @@ namespace DataAccess
 
                 if(rowsAffected != 0)                                                    //Returns true provided the values entered were *not* null.
                 {
-                    return true;
+                    if(newUser.userName != null)
+                    {
+                        return GetUserByUserName(newUser.userName);
+                    }
+                    else
+                    {
+                        throw new UsernameNotAvailable();
+                    }
+                }
+                else
+                {
+                    throw new UsernameNotAvailable();
                 }
             }
-
             catch
             {
                 throw new InvalidCredentials("Information provided was not in an acceptable format."); 
             }
-
-            return false;
         }
     }
 }

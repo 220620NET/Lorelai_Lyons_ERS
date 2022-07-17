@@ -14,26 +14,15 @@ public class Users                            //Define the user class.
     public string password { get; set; }     //Custom defined employee login password.
     public Role role { get; set; }            //Enter employee role.
 
-    public Users() {}                                   
-    
-    public Users(int userId, string legalName,string userName, string password, Role role)//use for accessing DB          
-    {
-        this.userId = userId; 
-        this.legalName = legalName;                                 
+    public Users() {}                                  
+
+    public Users(string userName, string password)//Constructor for logging in          
+    {                                
         this.userName = userName;                                    
-        this.password = password;                         //   "    "                             
-        this.role = role;                                        
+        this.password = password;                         //   "    "                                                                     
     }
 
-    public Users(string legalName, string userName, string password, Role role)//used for entering information into DB          
-    {
-        this.legalName = legalName;                          
-        this.userName = userName;                                    
-        this.password = password;                         //   "    "                             
-        this.role = role;                                        
-    }
-
-    public Users(string legalName, string userName, string password, int role)
+    public Users(string legalName, string userName, string password, int role)//used for entering information into DB
     {
         this.legalName = legalName;
         this.userName = userName;
@@ -41,6 +30,14 @@ public class Users                            //Define the user class.
         this.role = (Role) role;
     }
 
+    public Users(int userId, string legalName, string userName, string password, Role role)//used for accessing information from DB          
+    {
+        this.userId = userId; 
+        this.legalName = legalName;                          
+        this.userName = userName;                                    
+        this.password = password;                         //   "    "                             
+        this.role = role;                                        
+    }
 
     public int RoleToNum(string userEntry)
     {
@@ -63,8 +60,10 @@ public class Users                            //Define the user class.
     public override string ToString()
     { 
         return $"UserId: {this.userId}, Legal Name: {this.legalName}, Userame: {this.userName}, Role: {RoleToString(this.role)}";
-    }
-    /*
+    }   
+}
+
+/*
     public Role StringToRole(string input)
     {
         Dictionary<string,Role> declareRole = new Dictionary<string, Role>()
@@ -87,4 +86,3 @@ public class Users                            //Define the user class.
         return declareRole[input];
     }
     */
-}

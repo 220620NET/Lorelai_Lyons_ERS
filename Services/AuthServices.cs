@@ -39,7 +39,7 @@ namespace Services
             }
         }
         
-        public bool RegisterUser(Users newUser)
+        public Users RegisterUser(Users newUser)
         {
             try
             {
@@ -55,13 +55,20 @@ namespace Services
                 }
                 else
                 {
-                    return _user.RegisterUser(newUser);
+                    Users user = _user.RegisterUser(newUser);
+                    return user;
                 }
             }
+            
             catch(UsernameNotAvailable)
             {
                 throw new UsernameNotAvailable();                
-            }            
+            }
+
+            catch(ResourceNotFound)
+            {
+                return _user.RegisterUser(newUser);
+            }
         }
     }
 }

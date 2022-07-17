@@ -17,7 +17,7 @@ namespace DataAccess
     public interface IUserDAO                               //Interface for the user repository.
     {
         List<Users> GetAllUsers();
-        bool RegisterUser(Users user);
+        Users RegisterUser(Users user);
         Users GetUserByUserId(int userId);
         Users GetUserByUserName(string userName);
         //public void DeleteAccount(Users user);

@@ -31,6 +31,7 @@ app.MapGet("/users", () =>
     return getAll.GetAllUsers();
 });
 
+
 app.MapGet("/tickets", () =>
 {
     var scope = app.Services.CreateScope();
@@ -56,3 +57,20 @@ app.MapPost("/register", (Users user) =>
 });   
 
 app.Run();                                          //Runs the application!!
+/*
+app.MapPost("/userbyusername", (Users user) =>
+{
+    var scope = app.Services.CreateScope();
+    UserService byUserName = scope.ServiceProvider.GetRequiredService<UserService>();
+
+    try
+    {   
+        byUserName.GetUserByUserName(user.userName);
+        return Results.CreatedAtRoute("Cool here are the results");
+    }
+    catch(InvalidCredentials)
+    {
+        return Results.Conflict("No user with this name exists.");
+    }
+});
+*/
