@@ -83,6 +83,7 @@ namespace DataAccess
                     return new Users
                     {
                         userId = (int)reader["user_ID"],
+                        legalName = (string)reader["legalName"],
                         userName = (string)reader["userName"],
                         password = (string)reader["password"],
                         role = (Role)roleNum

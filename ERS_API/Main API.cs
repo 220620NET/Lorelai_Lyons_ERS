@@ -1,4 +1,5 @@
 using DataAccess;
+using ErsAPI.Controllers;
 using Exceptions;
 using Models;
 using Services;                                    
@@ -9,8 +10,11 @@ builder.Services.AddSingleton<ConnectionFactory>(ctx => ConnectionFactory.GetIns
 
 builder.Services.AddScoped<IUserDAO, UserRepository>();    //Adding both of our repositories
 builder.Services.AddScoped<ITicketDAO, TicketRepository>();//          "   " 
+builder.Services.AddScoped<AuthController>();
+builder.Services.AddScoped<UserController>();
+builder.Services.AddScoped<TicketController>();
 builder.Services.AddTransient<AuthService>();          //Adding a dependency to AuthServices.
-builder.Services.AddTransient<UserService>();
+builder.Services.AddTransient<UserService>();          //I may not need services references w/controllers?
 builder.Services.AddTransient<TicketService>();
 
 builder.Services.AddEndpointsApiExplorer();         //These two instruct our program that we will
@@ -21,57 +25,13 @@ var app = builder.Build();                          //Builds our WebAPI.
 app.UseSwagger();                                   //Swagger generates documentation for us.
 app.UseSwaggerUI();                                 //                  "   "
 
-app.MapGet("/", () => "Hello World!");              //Default endpoint.
+app.MapGet("/getUsers/allUsers", (UserController controller) => controller.GetAllUsers());
 
-app.MapGet("/users", () =>
-{
-    var scope = app.Services.CreateScope();
-    UserService getAll = scope.ServiceProvider.GetRequiredService<UserService>();
+app.MapPost("/getUsers/userName/{userName}", (string userName, UserController controller) => controller.GetUserByUserName(userName));
 
-    return getAll.GetAllUsers();
-});
+app.MapGet("/getAllTickets", ( TicketController controller) => controller.GetAllTickets());
 
-app.MapPost("/userbyusername", (Users user) =>
-{
-    var scope = app.Services.CreateScope();
-    UserService byUserName = scope.ServiceProvider.GetRequiredService<UserService>();
-
-    try
-    {   
-        byUserName.GetUserByUserName(user.userName);
-        return Results.CreatedAtRoute("Cool here are the results");
-    }
-    catch(InvalidCredentials)
-    {
-        return Results.Conflict("No user with this name exists.");
-    }
-});
-
-app.MapGet("/tickets", () =>
-{
-    var scope = app.Services.CreateScope();
-    TicketService getAll = scope.ServiceProvider.GetRequiredService<TicketService>();
-
-    return getAll.GetAllTickets();
-});
-
-app.MapPost("/register", (Users user) =>
-{
-    var scope = app.Services.CreateScope();
-    AuthService register = scope.ServiceProvider.GetRequiredService<AuthService>();
-
-    Console.WriteLine(user.ToString());
-
-    try
-    {
-       register.RegisterUser(user);
-       return Results.CreatedAtRoute("Registration success."); 
-    }
-    catch(DuplicateRecord)
-    {
-        return Results.Conflict("User with this username already exists.");
-    }
-});   
+app.MapPost("/registerUser", (Users user, AuthController controller) => controller.RegisterUser(user));   
 
 app.Run();                                          //Runs the application!!
 
