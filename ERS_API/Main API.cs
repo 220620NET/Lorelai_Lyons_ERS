@@ -25,13 +25,15 @@ var app = builder.Build();                          //Builds our WebAPI.
 app.UseSwagger();                                   //Swagger generates documentation for us.
 app.UseSwaggerUI();                                 //                  "   "
 
-app.MapGet("/getUsers/allUsers", (UserController controller) => controller.GetAllUsers());
+app.MapGet("/users/allUsers", (UserController controller) => controller.GetAllUsers());
 
-app.MapPost("/getUsers/userName/{userName}", (string userName, UserController controller) => controller.GetUserByUserName(userName));
+app.MapPost("/users/userName/{userName}", (string userName, UserController controller) => controller.GetUserByUserName(userName));
 
-app.MapGet("/getAllTickets", ( TicketController controller) => controller.GetAllTickets());
+app.MapGet("/getAllTickets", (TicketController controller) => controller.GetAllTickets());
 
-app.MapPost("/registerUser", (Users user, AuthController controller) => controller.RegisterUser(user));   
+app.MapPost("/register", (Users user, AuthController controller) => controller.RegisterUser(user));
+
+app.MapPost("/login", (Users user, AuthController controller) => controller.Login(user));   
 
 app.Run();                                          //Runs the application!!
 

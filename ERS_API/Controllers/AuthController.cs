@@ -13,9 +13,26 @@ public class AuthController
         _service = service;
     }
 
+    public IResult Login(Users userToLogin)
+    {
+        if(userToLogin.userName == null || userToLogin.password == null)
+        {
+            return Results.BadRequest("Name cannot be null");
+        }
+        try
+        {
+            userToLogin = _service.Login(userToLogin.userName, userToLogin.password);
+            return Results.Created("/login", userToLogin);
+        }
+        catch(InvalidCredentials)
+        {
+            return Results.Unauthorized();
+        }
+    }
+
     public IResult RegisterUser(Users userToRegister)
     {
-        Console.WriteLine(userToRegister.ToString());
+        //Console.WriteLine(userToRegister.ToString());     //If I want to print to console
 
         if(userToRegister.userName == null)
         {
@@ -28,7 +45,7 @@ public class AuthController
         }
         catch(DuplicateRecord)
         {
-        return Results.Conflict("User with this username already exists.");
+            return Results.Conflict("User with this username already exists.");
         }
     }
 }

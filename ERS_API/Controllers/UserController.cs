@@ -16,7 +16,7 @@ public class UserController
     public IResult GetAllUsers()
     {
         List<Users> userList = _service.GetAllUsers();
-        return Results.Accepted("/getUsers/allUsers", userList);
+        return Results.Accepted("/users/allUsers", userList);
     }
 
     public IResult GetUserByUserName(string userName)
@@ -24,7 +24,7 @@ public class UserController
         try
         {   
             Users queriedUser = _service.GetUserByUserName(userName);
-            return Results.Created("/getUsers/userName/{userName}", queriedUser);
+            return Results.Created("/users/userName/{userName}", queriedUser);
         }
         catch(InvalidCredentials)
         {
