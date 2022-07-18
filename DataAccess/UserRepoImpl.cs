@@ -144,13 +144,13 @@ namespace DataAccess
             
             SqlCommand registerUser = new SqlCommand(sqlStmnt, dbConnect);                //Defining the registerUser methods and arguments.
 
-            registerUser.Parameters.AddWithValue("@legalName,", newUser.legalName); 
+            registerUser.Parameters.AddWithValue("@legalName", newUser.legalName); 
             registerUser.Parameters.AddWithValue("@userName", newUser.userName);
             registerUser.Parameters.AddWithValue("@password", newUser.password);
             registerUser.Parameters.AddWithValue("@role", newUser.RoleToString(newUser.role));
-
-            try
-            {
+            
+            //try
+            //{
                 dbConnect.Open();                                                        //Opening the connection to the database.
                 
                 int rowsAffected = registerUser.ExecuteNonQuery();                       //Execute non query will be for DML statements.
@@ -172,11 +172,12 @@ namespace DataAccess
                 {
                     throw new UsernameNotAvailable();
                 }
-            }
+            //}
+            /*
             catch
             {
                 throw new InvalidCredentials("Information provided was not in an acceptable format."); 
-            }
+            }*/
         }
     }
 }

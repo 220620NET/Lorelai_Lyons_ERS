@@ -60,6 +60,8 @@ app.MapPost("/register", (Users user) =>
     var scope = app.Services.CreateScope();
     AuthService register = scope.ServiceProvider.GetRequiredService<AuthService>();
 
+    Console.WriteLine(user.ToString());
+
     try
     {
        register.RegisterUser(user);
@@ -72,4 +74,7 @@ app.MapPost("/register", (Users user) =>
 });   
 
 app.Run();                                          //Runs the application!!
+
+//INSERT INTO Issues(Title, Content, DateCreated) OUTPUT INSERTED.Id VALUES (@title, @content, @date)
+//ExecuteScalar - returns first column of first row
 
