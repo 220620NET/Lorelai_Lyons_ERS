@@ -37,7 +37,7 @@ namespace DataAccess
                 SqlDataReader reader = returnUsers.ExecuteReader();                      //Stores the result set of a SQL statement into a variable 
                 while (reader.Read())
                 {
-                    Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}", reader[0], reader[1], reader[2], reader[3]);//based on number of columns!!!!
+                    Console.WriteLine("\t{0}\t{1}\t{2}\t{3}", reader[0], reader[1], reader[2], reader[3]);//based on number of columns!!!!
 
                     int roleNum = userInstance.RoleToNum((string)reader[4]);
 
@@ -83,7 +83,7 @@ namespace DataAccess
                     return new Users
                     {
                         userId = (int)reader["user_ID"],
-                        userName = (string)reader["username"],
+                        userName = (string)reader["userName"],
                         password = (string)reader["password"],
                         role = (Role)roleNum
                     };

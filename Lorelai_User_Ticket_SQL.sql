@@ -16,7 +16,7 @@ create table Lor_P1.tickets(
 		description varchar(255) not null,
 		status varchar(8) not null check (status in ('Pending', 'Approved', 'Denied')) default 'Pending',
 		manager_note varchar(100),
-		amount double precision,
+		amount money not null,
 		primary key (ticket_ID)
 		);
 

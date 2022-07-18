@@ -38,7 +38,7 @@ namespace DataAccess
                 {
                     Tickets ticketTest = new Tickets();
 
-                    Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}", reader[0], reader[1], reader[2], reader[3], reader["status"], reader[5], reader[6]);//based on number of columns!!!!
+                    Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}", reader[0], reader[1], reader[2], reader[3], reader["status"], reader[5], reader[6]);//based on number of columns!!!!
                     ticketsInRepo.Add(new Tickets
                     (
                      (int)reader[0],
