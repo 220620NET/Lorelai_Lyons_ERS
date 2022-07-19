@@ -27,9 +27,13 @@ app.UseSwaggerUI();                                 //                  "   "
 
 app.MapGet("/users/allUsers", (UserController controller) => controller.GetAllUsers());
 
-app.MapPost("/users/userName/{userName}", (string userName, UserController controller) => controller.GetUserByUserName(userName));
+app.MapGet("/users/userName/{userName}", (string userName, UserController controller) => controller.GetUserByUserName(userName));
+
+app.MapGet("/users/userId/{userId}", (int userId, UserController controller) => controller.GetUserByUserId(userId));
 
 app.MapGet("/getAllTickets", (TicketController controller) => controller.GetAllTickets());
+
+app.MapGet("/tickets/ticketId/{ticketId}", (int ticketId, TicketController controller) => controller.GetTicketByTicketId(ticketId));
 
 app.MapPost("/register", (Users user, AuthController controller) => controller.RegisterUser(user));
 

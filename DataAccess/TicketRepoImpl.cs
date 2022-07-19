@@ -60,10 +60,8 @@ namespace DataAccess
             return ticketsInRepo;                                                        //Keeps content displayed until exit
         }
 
-        public List<Tickets> GetTicketByAuthorId(int authorId)                             //
+        public Tickets GetTicketByAuthorId(int authorId)                             //
         {
-            List<Tickets> ticketsInRepo = new List<Tickets>();
-            
             string queryString = "select * from Lor_P1.tickets where authorId = @author_id;";
 
             SqlConnection dbConnect = _connectionFactory.GetConnection();
@@ -72,40 +70,39 @@ namespace DataAccess
 
             getAuthor.Parameters.AddWithValue("@author_id", authorId);
 
+            Tickets ticketInstance = new Tickets();
             try
             {
                 dbConnect.Open();                                                        //opens connection to the database
                 SqlDataReader reader = getAuthor.ExecuteReader();                          //Stores the result set of a SQL statement into a variable 
                 while (reader.Read())
                 {
-                    Tickets ticketTest = new Tickets();
+                    int ticketNum = ticketInstance.StatusToNum((string)reader[4]);
 
-                    Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}", reader[0], reader[1], reader[2], reader[3], reader["status"], reader[5], reader[6]);//based on number of columns!!!!
-                    ticketsInRepo.Add(new Tickets
+                    //Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}", reader[0], reader[1], reader[2], reader[3], reader["status"], reader[5], reader[6]);//based on number of columns!!!!
+                    Tickets ticket = new Tickets
                     (
                      (int)reader[0],
                      (int)reader[1],
                      (int)reader[2],
                      (string)reader[3],
-                     ticketTest.StringToStatus((string)reader["status"]),
+                     (Status)ticketNum,
                      (string)reader[5],
                      (decimal)reader[6]
-                    ));
+                    );
                 }
                 reader.Close();                                                          //closees connection to the database. Important!
                 dbConnect.Close();                                                       //closes connection to server
             }
-            catch (Exception ex)                                                         //If the connection fails
+            catch                                                         //If the connection fails
             {
-                Console.WriteLine(ex.Message);                                           //Displays error message
+                throw new InvalidCredentials("Information provided was not in an acceptable format.");                                           //Displays error message
             }
-            return ticketsInRepo;
+            return ticketInstance;
         }
 
-        public List<Tickets> GetTicketByTicketId(int ticketId)                           //
+        public Tickets GetTicketByTicketId(int ticketId)                           //
         {
-            List<Tickets> ticketsInRepo = new List<Tickets>();
-            
             string queryString = "select * from Lor_P1.tickets where ticketId = @ticket_Id;";
 
             SqlConnection dbConnect = _connectionFactory.GetConnection();
@@ -114,40 +111,39 @@ namespace DataAccess
 
             getAuthor.Parameters.AddWithValue("@ticket_Id", ticketId);
 
+            Tickets ticketInstance = new Tickets();
             try
             {
                 dbConnect.Open();                                                        //opens connection to the database
                 SqlDataReader reader = getAuthor.ExecuteReader();                          //Stores the result set of a SQL statement into a variable 
                 while (reader.Read())
                 {
-                    Tickets ticketTest = new Tickets();
+                    int ticketNum = ticketInstance.StatusToNum((string)reader[4]);
 
-                    Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}", reader[0], reader[1], reader[2], reader[3], reader["status"], reader[5], reader[6]);//based on number of columns!!!!
-                    ticketsInRepo.Add(new Tickets
+                    //Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}", reader[0], reader[1], reader[2], reader[3], reader["status"], reader[5], reader[6]);//based on number of columns!!!!
+                    Tickets ticket = new Tickets
                     (
                      (int)reader[0],
                      (int)reader[1],
                      (int)reader[2],
                      (string)reader[3],
-                     ticketTest.StringToStatus((string)reader["status"]),
+                     (Status)ticketNum,
                      (string)reader[5],
                      (decimal)reader[6]
-                    ));
+                    );
                 }
                 reader.Close();                                                          //closees connection to the database. Important!
                 dbConnect.Close();                                                       //closes connection to server
             }
-            catch (Exception ex)                                                         //If the connection fails
+            catch                                                         //If the connection fails
             {
-                Console.WriteLine(ex.Message);                                           //Displays error message
+                throw new InvalidCredentials("Information provided was not in an acceptable format.");                                           //Displays error message
             }
-            return ticketsInRepo;
+            return ticketInstance;
         }
 
-        public List<Tickets> GetTicketByTicketStatus(Status status)                      //
-        {
-            List<Tickets> ticketsInRepo = new List<Tickets>();
-            
+        public Tickets GetTicketByTicketStatus(Status status)                      //
+        {            
             string queryString = "select * from Lor_P1.tickets where status = @status;";
 
             SqlConnection dbConnect = _connectionFactory.GetConnection();
@@ -156,34 +152,36 @@ namespace DataAccess
 
             getStatus.Parameters.AddWithValue("@status", status);
 
+            Tickets ticketInstance = new Tickets();
+
             try
             {
                 dbConnect.Open();                                                        //opens connection to the database
                 SqlDataReader reader = getStatus.ExecuteReader();                          //Stores the result set of a SQL statement into a variable 
                 while (reader.Read())
                 {
-                    Tickets ticketTest = new Tickets();
+                    int ticketNum = ticketInstance.StatusToNum((string)reader[4]);
 
-                    Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}", reader[0], reader[1], reader[2], reader[3], reader["status"], reader[5], reader[6]);//based on number of columns!!!!
-                    ticketsInRepo.Add(new Tickets
+                    //Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}", reader[0], reader[1], reader[2], reader[3], reader["status"], reader[5], reader[6]);//based on number of columns!!!!
+                    Tickets ticket = new Tickets
                     (
                      (int)reader[0],
                      (int)reader[1],
                      (int)reader[2],
                      (string)reader[3],
-                     ticketTest.StringToStatus((string)reader["status"]),
+                     (Status)ticketNum,
                      (string)reader[5],
                      (decimal)reader[6]
-                    ));
+                    );
                 }
                 reader.Close();                                                          //closees connection to the database. Important!
                 dbConnect.Close();                                                       //closes connection to server
             }
-            catch (Exception ex)                                                         //If the connection fails
+            catch                                                         //If the connection fails
             {
-                Console.WriteLine(ex.Message);                                           //Displays error message
+                throw new InvalidCredentials("Information provided was not in an acceptable format.");                                           //Displays error message
             }
-            return ticketsInRepo;
+            return ticketInstance;
         }
 
         public bool CreateTicket(Tickets newTicket)

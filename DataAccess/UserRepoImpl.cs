@@ -9,12 +9,7 @@ namespace DataAccess
     public class UserRepository : IUserDAO
     {
         private readonly ConnectionFactory _connectionFactory;
-        /*I don't know if I need this anymore... I don't think I do
-        public UserRepository()
-        {
-            _connectionFactory = ConnectionFactory.GetInstance(File.ReadAllText("../DataAccess/connectionString.txt"));
-        }
-        */
+
         public UserRepository(ConnectionFactory factory)
         {
             _connectionFactory = factory;
@@ -82,7 +77,7 @@ namespace DataAccess
                     
                     return new Users
                     {
-                        userId = (int)reader["user_ID"],
+                        userId = (int)reader["userId"],
                         legalName = (string)reader["legalName"],
                         userName = (string)reader["userName"],
                         password = (string)reader["password"],
@@ -121,7 +116,8 @@ namespace DataAccess
                     
                     return new Users
                     {
-                        userId = (int)reader["user_ID"],
+                        userId = (int)reader["userId"],
+                        legalName = (string)reader["legalName"],
                         userName = (string)reader["username"],
                         password = (string)reader["password"],
                         role = (Role)roleNum

@@ -15,6 +15,7 @@ public class AuthController
 
     public IResult Login(Users userToLogin)
     {
+        
         if(userToLogin.userName == null || userToLogin.password == null)
         {
             return Results.BadRequest("Name cannot be null");
@@ -22,7 +23,7 @@ public class AuthController
         try
         {
             userToLogin = _service.Login(userToLogin.userName, userToLogin.password);
-            return Results.Created("/login", userToLogin);
+            return Results.Ok(userToLogin);
         }
         catch(InvalidCredentials)
         {

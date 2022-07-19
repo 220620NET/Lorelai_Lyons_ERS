@@ -9,9 +9,9 @@ namespace DataAccess
         bool CreateTicket(Tickets createTicket);
         bool UpdateTicket(Tickets existingTicket);  //maybe change these to new ticket later?
         //public void DeleteTicket(Tickets existingTicket);  //also I got rid of all the 'publics...
-        List<Tickets> GetTicketByTicketId(int ticketId);          //public may be redundant here?
-        List<Tickets> GetTicketByAuthorId(int authorId);
-        List<Tickets> GetTicketByTicketStatus(Status status);
+        Tickets GetTicketByTicketId(int ticketId);          //public may be redundant here?
+        Tickets GetTicketByAuthorId(int authorId);
+        Tickets GetTicketByTicketStatus(Status status);
     }
 
     public interface IUserDAO                               //Interface for the user repository.

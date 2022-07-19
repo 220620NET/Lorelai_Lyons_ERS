@@ -31,4 +31,17 @@ public class UserController
             return Results.BadRequest("No user with this name exists.");
         }
     }
+
+    public IResult GetUserByUserId(int userId)
+    {
+        try
+        {   
+            Users queriedUser = _service.GetUserByUserId(userId);
+            return Results.Created("/users/userId/{userId}", queriedUser);
+        }
+        catch(InvalidCredentials)
+        {
+            return Results.BadRequest("No user with this userId exists.");
+        }
+    }
 }

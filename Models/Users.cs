@@ -62,27 +62,3 @@ public class Users                            //Define the user class.
         return $"UserId: {this.userId}, Legal Name: {this.legalName}, Userame: {this.userName}, Role: {RoleToString(this.role)}";
     }   
 }
-
-/*
-    public Role StringToRole(string input)
-    {
-        Dictionary<string,Role> declareRole = new Dictionary<string, Role>()
-        {
-            {"Employee", Role.Employee},
-            {"Manager", Role.Manager}
-        };
-
-        return declareRole[input];
-    }
-
-    public String RoleToString(Role input)
-    {
-        Dictionary<Role,string> declareRole = new Dictionary<Role, string>()
-        {
-            {Role.Employee, "Employee"},
-            {Role.Manager, "Manager"}
-        };
-
-        return declareRole[input];
-    }
-    */

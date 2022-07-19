@@ -40,6 +40,37 @@ public class Tickets                          //Tickets class...
         this.amount = amount;                                       
     }
 
+    public int StatusToNum(string userEntry)
+    {
+        switch (userEntry)
+        {
+            case "Approved":
+                return 1;
+            case "Denied":
+                return 2;
+            default:
+                return 0;
+        }
+    }
+
+    public string NumToStatus(int userEntry)
+    {
+        switch (userEntry)
+        {
+            case 1:
+                return "Approved";
+            case 2:
+                return "Denied";
+            default:
+                return "Pending";
+        }
+    }
+    
+    public override string ToString()
+    {
+        return $"TicketId: {this.ticketId}\nAuthorId: {this.authorId}\nResolverId: {this.resolverId}\nStatus: {this.status}\nDescription: {this.description}\n Amount: {this.amount}";
+    }
+
     public Status StringToStatus(string input)
     {
         Dictionary<string,Status> dictStatus = new Dictionary<string, Status>()

@@ -18,5 +18,16 @@ public class TicketController
         return _service.GetAllTickets();
     }
 
-    //public IResult GetTicketByTicketId(User newUser);
+    public IResult GetTicketByTicketId(int ticketId)
+    {
+        try
+        {   
+            Tickets queriedTicket = _service.GetTicketByTicketId(ticketId);
+            return Results.Created("/tickets/ticketId/{ticketId}", queriedTicket);
+        }
+        catch(InvalidCredentials)
+        {
+            return Results.BadRequest("No ticket with this ticketId exists.");
+        }
+    }
 }
