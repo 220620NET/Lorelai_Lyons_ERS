@@ -20,6 +20,6 @@ namespace DataAccess
         Users RegisterUser(Users user);
         Users GetUserByUserId(int userId);
         Users GetUserByUserName(string userName);
-        //public void DeleteAccount(Users user);
+        //public void DeleteAccount(Use+rs user);
     }
 }

@@ -54,7 +54,7 @@ namespace Services
             }
         }
 
-        public bool CreateNewTicket(Tickets createTicket)
+        public bool SubmitTicket(Tickets createTicket)
         {
             try
             {
@@ -75,7 +75,7 @@ namespace Services
             }
         }
 
-        public bool UpdateTicket(Tickets existingTicket)
+        public bool EditTicket(Tickets existingTicket)
         {
             try
             {
