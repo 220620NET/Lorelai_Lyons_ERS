@@ -40,11 +40,11 @@ public class Tickets                          //Tickets class...
         this.amount = amount;                                       
     }
 
-    public Tickets(int authorId, string description, decimal amount)//used for entering information into DB          
+    public Tickets(int authorIdEntry, string descriptionEntry, decimal amountEntry)//used for entering information into DB          
     {
-        this.authorId = authorId;                                                              
-        this.description = description;       //   "    "
-        this.amount = amount;                                       
+        this.authorId = authorIdEntry;                                                              
+        this.description = descriptionEntry;       //   "    "
+        this.amount = amountEntry;                                       
     }
 
     public Tickets(int ticketId, int resolverId, int status, string managerNote)//used for entering information into DB          

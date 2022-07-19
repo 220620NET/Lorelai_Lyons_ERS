@@ -22,4 +22,11 @@ namespace DataAccess
         Users GetUserByUserName(string userName);
         //public void DeleteAccount(Use+rs user);
     }
+    /*      maybemaybemaybe
+    public interface IEncryptionDAO();
+    {
+        Users HashPass(string password);
+        Users StoredPassword(string password);
+    }
+    */
 }
