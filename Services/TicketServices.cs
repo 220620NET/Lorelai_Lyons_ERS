@@ -58,16 +58,7 @@ namespace Services
         {
             try
             {
-                bool ticketGenerator = _ticketDAO.CreateTicket(createTicket);
-
-                if(ticketGenerator)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return _ticketDAO.CreateTicket(createTicket);
             }
             catch(InvalidCredentials)
             {

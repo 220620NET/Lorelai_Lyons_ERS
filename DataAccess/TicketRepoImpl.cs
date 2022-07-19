@@ -187,14 +187,15 @@ namespace DataAccess
 
         public bool CreateTicket(Tickets newTicket)
         {
-            string sqlStmnt = "insert into Lor_P1.tickets(author_fk, description, amount) values(@author_fk, @description, @amount);";
+            string sqlStmnt = "insert into Lor_P1.tickets(author_fk, resolver_fk, description, amount) values(@author_fk, @resolver_fk, @description, @amount);";
             List<Users> submitterList = new UserRepository(_connectionFactory).GetAllUsers();
 
             SqlConnection dbConnect = _connectionFactory.GetConnection();                 //Invoking our instance of the Connection Factory.
             
             SqlCommand submitTicket = new SqlCommand(sqlStmnt, dbConnect);                //Defining the submitTicket methods and arguments.
 
-            submitTicket.Parameters.AddWithValue("@author_fk", newTicket.authorId); 
+            submitTicket.Parameters.AddWithValue("@author_fk", newTicket.authorId);
+            submitTicket.Parameters.AddWithValue("@resolver_fk", newTicket.resolverId);
             submitTicket.Parameters.AddWithValue("@description", newTicket.description);
             submitTicket.Parameters.AddWithValue("@amount", newTicket.amount);
             try
