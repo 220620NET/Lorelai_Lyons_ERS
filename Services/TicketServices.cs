@@ -18,7 +18,7 @@ namespace Services
             return _ticketDAO.GetAllTickets();
         }
 
-        public Tickets GetTicketByTicketId(int ticketId)
+        public Tickets SearchByTicketId(int ticketId)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace Services
             }
         }
 
-        public Tickets GetTicketByAuthorId(int authorId)
+        public Tickets SearchByAuthorId(int authorId)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace Services
             }
         }
 
-        public Tickets GetTicketByTicketStatus(Status status)
+        public Tickets SearchByTicketId(Status status)
         {
             try
             {

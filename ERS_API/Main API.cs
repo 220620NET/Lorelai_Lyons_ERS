@@ -28,23 +28,23 @@ app.UseSwaggerUI();                                 //                  "   "
 //user search methods
 app.MapGet("/users/allUsers", (UserController controller) => controller.GetAllUsers());
 
-app.MapGet("/users/userName/{userName}", (string userName, UserController controller) => controller.GetUserByUserName(userName));
+app.MapGet("/users/userName/{userName}", (string userName, UserController controller) => controller.UserNameSearch(userName));
 
-app.MapGet("/users/userId/{userId}", (int userId, UserController controller) => controller.GetUserByUserId(userId));
+app.MapGet("/users/userId/{userId}", (int userId, UserController controller) => controller.UserIdSearch(userId));
 
 //Ticket search methods
 app.MapGet("/getAllTickets", (TicketController controller) => controller.GetAllTickets());
 
-app.MapGet("/tickets/ticketId/{ticketId}", (int ticketId, TicketController controller) => controller.GetTicketByTicketId(ticketId));
+app.MapGet("/tickets/ticketId/{ticketId}", (int ticketId, TicketController controller) => controller.TicketIdSearch(ticketId));
 
-app.MapGet("/tickets/authorId/{authorId}", (int authorId, TicketController controller) => controller.GetTicketByAuthorId(authorId));
+app.MapGet("/tickets/authorId/{authorId}", (int authorId, TicketController controller) => controller.AuthorIdSearch(authorId));
 
 //user features
 app.MapPost("/tickets/update", (Tickets ticket, TicketController controller) => controller.Update(ticket));
 
 app.MapPost("/tickets/submission", (Tickets ticket, TicketController controller) => controller.Submit(ticket));
 
-app.MapPost("/register", (Users user, AuthController controller) => controller.RegisterUser(user));
+app.MapPost("/register", (Users user, AuthController controller) => controller.Register(user));
 
 app.MapPost("/login", (Users user, AuthController controller) => controller.Login(user));   
 

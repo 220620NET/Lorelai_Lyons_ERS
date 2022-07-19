@@ -19,11 +19,11 @@ public class UserController
         return Results.Accepted("/users/allUsers", userList);
     }
 
-    public IResult GetUserByUserName(string userName)
+    public IResult UserNameSearch(string userName)
     {
         try
         {   
-            Users queriedUser = _service.GetUserByUserName(userName);
+            Users queriedUser = _service.SearchByUserName(userName);
             return Results.Created("/users/userName/{userName}", queriedUser);
         }
         catch(InvalidCredentials)
@@ -32,11 +32,11 @@ public class UserController
         }
     }
 
-    public IResult GetUserByUserId(int userId)
+    public IResult UserIdSearch(int userId)
     {
         try
         {   
-            Users queriedUser = _service.GetUserByUserId(userId);
+            Users queriedUser = _service.SearchByUserId(userId);
             return Results.Created("/users/userId/{userId}", queriedUser);
         }
         catch(InvalidCredentials)

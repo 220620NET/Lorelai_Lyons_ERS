@@ -40,6 +40,21 @@ public class Tickets                          //Tickets class...
         this.amount = amount;                                       
     }
 
+    public Tickets(int authorId, string description, decimal amount)//used for entering information into DB          
+    {
+        this.authorId = authorId;                                                              
+        this.description = description;       //   "    "
+        this.amount = amount;                                       
+    }
+
+    public Tickets(int ticketId, int resolverId, int status, string managerNote)//used for entering information into DB          
+    {                           
+        this.ticketId = ticketId;
+        this.resolverId = resolverId;                                           //   "    "
+        this.status = (Status) status;                             
+        this.managerNote = managerNote;                                     
+    }
+
     public int StatusToNum(string userEntry)
     {
         switch (userEntry)

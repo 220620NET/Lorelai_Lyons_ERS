@@ -9,12 +9,7 @@ namespace DataAccess
     public class TicketRepository : ITicketDAO
     {
         private readonly ConnectionFactory _connectionFactory;
-        /*I don't think I need this anymore...
-        public TicketRepository()
-        {
-            _connectionFactory = ConnectionFactory.GetInstance(File.ReadAllText("../DataAccess/connectionString.txt"));
-        }
-        */
+    
         public TicketRepository(ConnectionFactory factory)
         {
             _connectionFactory = factory;
@@ -62,22 +57,24 @@ namespace DataAccess
 
         public Tickets GetTicketByAuthorId(int authorId)                             //
         {
-            string queryString = "select * from Lor_P1.tickets where authorId = @author_id;";
+            string queryString = "select * from Lor_P1.tickets where author_fk = @author_fk;";
 
             SqlConnection dbConnect = _connectionFactory.GetConnection();
 
             SqlCommand getAuthor = new SqlCommand(queryString, dbConnect);                 //datatype for the active connection
 
-            getAuthor.Parameters.AddWithValue("@author_id", authorId);
+            getAuthor.Parameters.AddWithValue("@author_fk", authorId);
 
             Tickets ticketInstance = new Tickets();
+
+            Tickets functionTicket = new Tickets();
             try
             {
-                dbConnect.Open();                                                        //opens connection to the database
+                dbConnect.Open();                                                          //opens connection to the database
                 SqlDataReader reader = getAuthor.ExecuteReader();                          //Stores the result set of a SQL statement into a variable 
                 while (reader.Read())
                 {
-                    int ticketNum = ticketInstance.StatusToNum((string)reader[4]);
+                    int statNum = functionTicket.StatusToNum((string)reader[4]);
 
                     //Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}", reader[0], reader[1], reader[2], reader[3], reader["status"], reader[5], reader[6]);//based on number of columns!!!!
                     Tickets ticket = new Tickets
@@ -86,10 +83,11 @@ namespace DataAccess
                      (int)reader[1],
                      (int)reader[2],
                      (string)reader[3],
-                     (Status)ticketNum,
+                     (Status)statNum,
                      (string)reader[5],
                      (decimal)reader[6]
                     );
+                    ticketInstance = ticket;
                 }
                 reader.Close();                                                          //closees connection to the database. Important!
                 dbConnect.Close();                                                       //closes connection to server
@@ -103,7 +101,7 @@ namespace DataAccess
 
         public Tickets GetTicketByTicketId(int ticketId)                           //
         {
-            string queryString = "select * from Lor_P1.tickets where ticketId = @ticket_Id;";
+            string queryString = "select * from Lor_P1.tickets where ticket_Id = @ticket_Id;";
 
             SqlConnection dbConnect = _connectionFactory.GetConnection();
 
@@ -112,13 +110,15 @@ namespace DataAccess
             getAuthor.Parameters.AddWithValue("@ticket_Id", ticketId);
 
             Tickets ticketInstance = new Tickets();
+
+            Tickets functionTicket = new Tickets();
             try
             {
                 dbConnect.Open();                                                        //opens connection to the database
                 SqlDataReader reader = getAuthor.ExecuteReader();                          //Stores the result set of a SQL statement into a variable 
                 while (reader.Read())
                 {
-                    int ticketNum = ticketInstance.StatusToNum((string)reader[4]);
+                    int statNum = functionTicket.StatusToNum((string)reader[4]);
 
                     //Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}", reader[0], reader[1], reader[2], reader[3], reader["status"], reader[5], reader[6]);//based on number of columns!!!!
                     Tickets ticket = new Tickets
@@ -127,10 +127,11 @@ namespace DataAccess
                      (int)reader[1],
                      (int)reader[2],
                      (string)reader[3],
-                     (Status)ticketNum,
+                     (Status)statNum,
                      (string)reader[5],
                      (decimal)reader[6]
                     );
+                    ticketInstance = ticket;
                 }
                 reader.Close();                                                          //closees connection to the database. Important!
                 dbConnect.Close();                                                       //closes connection to server
@@ -160,7 +161,7 @@ namespace DataAccess
                 SqlDataReader reader = getStatus.ExecuteReader();                          //Stores the result set of a SQL statement into a variable 
                 while (reader.Read())
                 {
-                    int ticketNum = ticketInstance.StatusToNum((string)reader[4]);
+                    int ticketId = ticketInstance.StatusToNum((string)reader[4]);
 
                     //Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}", reader[0], reader[1], reader[2], reader[3], reader["status"], reader[5], reader[6]);//based on number of columns!!!!
                     Tickets ticket = new Tickets
@@ -169,7 +170,7 @@ namespace DataAccess
                      (int)reader[1],
                      (int)reader[2],
                      (string)reader[3],
-                     (Status)ticketNum,
+                     (Status)ticketId,
                      (string)reader[5],
                      (decimal)reader[6]
                     );
@@ -186,28 +187,33 @@ namespace DataAccess
 
         public bool CreateTicket(Tickets newTicket)
         {
-            string sqlStmnt = "insert into Lor_P1.tickets (authorId, resolverId, description, amount) values (@author_Id, @resolver_Id, @description, @amount);";
+            string sqlStmnt = "insert into Lor_P1.tickets(author_fk, description, amount) values(@author_fk, @description, @amount);";
+            List<Users> submitterList = new UserRepository(_connectionFactory).GetAllUsers();
 
             SqlConnection dbConnect = _connectionFactory.GetConnection();                 //Invoking our instance of the Connection Factory.
             
             SqlCommand submitTicket = new SqlCommand(sqlStmnt, dbConnect);                //Defining the submitTicket methods and arguments.
 
-            submitTicket.Parameters.AddWithValue("@authorId,", newTicket.authorId); 
-            submitTicket.Parameters.AddWithValue("@resolverId", newTicket.resolverId);
+            submitTicket.Parameters.AddWithValue("@author_fk", newTicket.authorId); 
             submitTicket.Parameters.AddWithValue("@description", newTicket.description);
             submitTicket.Parameters.AddWithValue("@amount", newTicket.amount);
-
             try
             {
                 dbConnect.Open();                                                        //Opening the connection to the database.
-                
-                int rowsAffected = submitTicket.ExecuteNonQuery();                       //Execute non query will be for DML statements.
-
-                dbConnect.Close();                                                       //Closing connection tot he database.
-
-                if(rowsAffected != 0)                                                    //Returns true provided the values entered were *not* null.
+                if((newTicket.authorId > 0) && (newTicket.authorId <= submitterList.Count))
                 {
-                    return true;
+                    int rowsAffected = submitTicket.ExecuteNonQuery();                       //Execute non query will be for DML statements.
+
+                    dbConnect.Close();                                                       //Closing connection tot he database.
+
+                    if(rowsAffected != 0)                                                    //Returns true provided the values entered were *not* null.
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    throw new InvalidCredentials();
                 }
             }
 
@@ -221,20 +227,47 @@ namespace DataAccess
 
         public bool UpdateTicket(Tickets upTicket)
         {
-            string queryString = "update Lor_P1.tickets set description = @description, amount = @amount;";
+            string queryString = "update Lor_P1.tickets set resolver_fk = @resolver_fk, status = @status, manager_note = @manager_note where ticket_Id = @ticket_Id;";
+            List<Users> updateList = new UserRepository(_connectionFactory).GetAllUsers();
 
             SqlConnection dbConnect = _connectionFactory.GetConnection();
 
-            dbConnect.Open();
             SqlCommand changeTicket = new SqlCommand(queryString, dbConnect);
 
-            changeTicket.Parameters.AddWithValue("@description", upTicket.description);
-            changeTicket.Parameters.AddWithValue("@amount", upTicket.amount);
-
-            dbConnect.Close();
+            changeTicket.Parameters.AddWithValue("@ticket_Id", upTicket.ticketId);
+            changeTicket.Parameters.AddWithValue("@resolver_fk", upTicket.resolverId);
+            changeTicket.Parameters.AddWithValue("@status", upTicket.NumToStatus((int)upTicket.status));
+            changeTicket.Parameters.AddWithValue("@manager_note", upTicket.managerNote);
             
+            try
+            {
+                dbConnect.Open();
+                if((upTicket.ticketId > 0) && (upTicket.ticketId <= updateList.Count))
+                {
+                    if(GetTicketByTicketId(upTicket.ticketId).status==Status.Approved || GetTicketByTicketId(upTicket.ticketId).status == Status.Denied)
+                    {
+                        return false;
+                    }
+                    int rowsAffected = changeTicket.ExecuteNonQuery();                       //Execute non query will be for DML statements.
 
-            return true;
+                    dbConnect.Close();                                                       //Closing connection tot he database.
+
+                    if(rowsAffected != 0)                                                    //Returns true provided the values entered were *not* null.
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    throw new InvalidCredentials();
+                }
+            }
+            catch(ResourceNotFound)
+            {
+                throw new ResourceNotFound();
+            }
+
+            return false;
         }
     }
 } 

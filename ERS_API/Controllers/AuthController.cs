@@ -31,7 +31,7 @@ public class AuthController
         }
     }
 
-    public IResult RegisterUser(Users userToRegister)
+    public IResult Register(Users userToRegister)
     {
         //Console.WriteLine(userToRegister.ToString());     //If I want to print to console
 

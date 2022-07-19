@@ -13,14 +13,12 @@ namespace Services
             _userDAO = userDAO;
         }
 
-        //public UserRepository userRepo = new UserRepository(); //I had this as private but changed it to public....
-
         public List<Users> GetAllUsers()
         {
             return _userDAO.GetAllUsers();
         }
 
-        public Users GetUserByUserName(string userName)
+        public Users SearchByUserName(string userName)
         {
             try
             {
@@ -32,7 +30,7 @@ namespace Services
             }
         }
 
-        public Users GetUserByUserId(int userId)
+        public Users SearchByUserId(int userId)
         {
             try
             {

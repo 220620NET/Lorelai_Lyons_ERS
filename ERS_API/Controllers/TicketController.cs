@@ -18,11 +18,11 @@ public class TicketController
         return _service.GetAllTickets();
     }
 
-    public IResult GetTicketByTicketId(int ticketId)
+    public IResult TicketIdSearch(int ticketId)
     {
         try
         {   
-            Tickets queriedTicket = _service.GetTicketByTicketId(ticketId);
+            Tickets queriedTicket = _service.SearchByTicketId(ticketId);
             return Results.Created("/tickets/ticketId/{ticketId}", queriedTicket);
         }
         catch(InvalidCredentials)
@@ -31,11 +31,11 @@ public class TicketController
         }
     }
 
-    public IResult GetTicketByAuthorId(int authorId)
+    public IResult AuthorIdSearch(int authorId)
     {
         try
         {   
-            Tickets queriedTicket = _service.GetTicketByAuthorId(authorId);
+            Tickets queriedTicket = _service.SearchByAuthorId(authorId);
             return Results.Created("/tickets/authorId/{authorId}", queriedTicket);
         }
         catch(InvalidCredentials)

@@ -57,7 +57,7 @@ namespace DataAccess
 
         public Users GetUserByUserName(string userName)                             //Method to search for user by their username.
         {
-            string queryString = "select * from Lor_P1.users where username = @userName;";
+            string queryString = "select * from Lor_P1.users where userName = @userName;";
 
             SqlConnection dbConnect = _connectionFactory.GetConnection();
 
@@ -67,69 +67,86 @@ namespace DataAccess
 
             Users userInstance = new Users();
 
-            try
-            {
+            Users functionUser = new Users();
+
+            //try
+            //{
                 dbConnect.Open();
                 SqlDataReader reader = userSearch.ExecuteReader(); 
-                while(reader.Read())
+                reader.Read();
+                if(!reader.HasRows)
+                {
+                    throw new ResourceNotFound();
+                }
+                else
                 {
                     int roleNum = userInstance.RoleToNum((string)reader[4]);
-                    
-                    return new Users
-                    {
-                        userId = (int)reader["userId"],
-                        legalName = (string)reader["legalName"],
-                        userName = (string)reader["userName"],
-                        password = (string)reader["password"],
-                        role = (Role)roleNum
-                    };
-                }
+
+                    userInstance = new Users
+                    (
+                        (int)reader[0],
+                        (string)reader[1],
+                        (string)reader[2],
+                        (string)reader[3],
+                        (Role)roleNum
+                    );
+                }                    
                 reader.Close();                                                           //closees connection to the database.
                 dbConnect.Close();                                                        //closes connection to server.
-            }
+            //}
+            /*
             catch                                                          //If the connection fails.
             {
                 throw new InvalidCredentials("Information provided was not in an acceptable format.");//Displays error message.
             }
+            */
             return userInstance;
         }
 
         public Users GetUserByUserId(int userId)                                        //Method to search for user by their userId.
         {
-            string queryString = "select * from Lor_P1.users where userId = @userId;";
+            string queryString = "select * from Lor_P1.users where user_Id = @user_Id;";
 
             SqlConnection dbConnect = _connectionFactory.GetConnection();
 
             SqlCommand userSearch = new SqlCommand(queryString, dbConnect);
 
-            userSearch.Parameters.AddWithValue("@userId", userId);
+            userSearch.Parameters.AddWithValue("@user_Id", userId);
 
             Users userInstance = new Users();
 
-            try
-            {
+            //try
+            //try
+            //{
                 dbConnect.Open();
                 SqlDataReader reader = userSearch.ExecuteReader(); 
-                while(reader.Read())
+                reader.Read();
+                if(!reader.HasRows)
+                {
+                    throw new ResourceNotFound();
+                }
+                else
                 {
                     int roleNum = userInstance.RoleToNum((string)reader[4]);
-                    
-                    return new Users
-                    {
-                        userId = (int)reader["userId"],
-                        legalName = (string)reader["legalName"],
-                        userName = (string)reader["username"],
-                        password = (string)reader["password"],
-                        role = (Role)roleNum
-                    };
-                }
+
+                    userInstance = new Users
+                    (
+                        (int)reader[0],
+                        (string)reader[1],
+                        (string)reader[2],
+                        (string)reader[3],
+                        (Role)roleNum
+                    );
+                }                    
                 reader.Close();                                                           //closees connection to the database.
                 dbConnect.Close();                                                        //closes connection to server.
-            }
+            //}
+            /*
             catch                                                          //If the connection fails.
             {
                 throw new InvalidCredentials("Information provided was not in an acceptable format.");//Displays error message.
             }
+            */
             return userInstance;
         }
 
