@@ -39,6 +39,8 @@ app.MapGet("/tickets/ticketId/{ticketId}", (int ticketId, TicketController contr
 
 app.MapGet("/tickets/authorId/{authorId}", (int authorId, TicketController controller) => controller.AuthorIdSearch(authorId));
 
+app.MapGet("/tickets/ticketStatus/{ticketStatus}", (Status status, TicketController controller) => controller.TicketStatusSearch(status));
+
 //user features
 app.MapPost("/tickets/update", (Tickets ticket, TicketController controller) => controller.Update(ticket));
 

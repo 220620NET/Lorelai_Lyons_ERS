@@ -1,9 +1,9 @@
-/*                                    //Basic Outline for my hashing/salting
+/*                                    //Basic Outline for my hashing/salting (currently unimplemented).
 using Exceptions;
 using Models;
 using System;
 using System.Data;
-using System.Data.SqlClient; //to use this I need to go to git and use command 'git add package System.Data.SqlClient'
+using System.Data.SqlClient;
 using System.Text;
 using System.Security.Cryptography;
 

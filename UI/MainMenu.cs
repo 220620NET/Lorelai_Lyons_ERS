@@ -118,34 +118,3 @@ public class MainMenu
         }
     }
 }
-
-/*
-
-****some mistakes that might be helpful to have lying around:******
-//Registering a user
-                    Console.WriteLine("Registering a user...\n");
-
-                    Console.WriteLine("Begin by entering your legal name:")
-
-                    string? legalName = Console.ReadLine();
-
-                    Console.WriteLine("Please enter a username:")
-
-                    string? userName = Console.ReadLine();
-
-                    Console.WriteLine("Please enter a password:")
-
-                    string? password = Console.ReadLine();
-
-                    string? role = Console.ReadLine();
-
-                    bool isSuccessful = userServices.RegisterUser(new Users(legalName, userName, password, Role.StringToRole(role)));
-                    
-                    if(isSuccessful){
-                        Console.WriteLine("@userName " + "has successfully activated their account.");
-                    }else{
-                        Console.WriteLine("Invalid input, try again pl0x");
-                    }
-                    
-                    break;
-                    */

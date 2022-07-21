@@ -5,28 +5,29 @@ namespace DataAccess
 {
     public interface ITicketDAO                              //Interface for the ticket repository.
     {
-        List<Tickets> GetAllTickets();
+        List<Tickets> GetAllTickets();                       //Method names self explanatory and explained in more detail in 'TicketRepoImpl'
         bool CreateTicket(Tickets createTicket);
-        bool UpdateTicket(Tickets existingTicket);  //maybe change these to new ticket later?
-        //public void DeleteTicket(Tickets existingTicket);  //also I got rid of all the 'publics...
-        Tickets GetTicketByTicketId(int ticketId);          //public may be redundant here?
+        bool UpdateTicket(Tickets existingTicket);           
+        //public void DeleteTicket(Tickets existingTicket);  //Unimplemented 'DeleteTicket' method, that could be reimplemented later.
+        Tickets GetTicketByTicketId(int ticketId);           
         Tickets GetTicketByAuthorId(int authorId);
-        Tickets GetTicketByTicketStatus(Status status);
+        List<Tickets> GetTicketByTicketStatus(Status status);
     }
 
-    public interface IUserDAO                               //Interface for the user repository.
+    public interface IUserDAO                                //Interface for the user repository.
     {
-        List<Users> GetAllUsers();
+        List<Users> GetAllUsers();                           //Method names self explanatory and explained in more detail in 'UserRepoImpl'
         Users RegisterUser(Users user);
         Users GetUserByUserId(int userId);
         Users GetUserByUserName(string userName);
-        //public void DeleteAccount(Use+rs user);
+        //public void DeleteAccount(Users user);             //Unimplemented 'DeleteTicket' method, that could be reimplemented later.
     }
-    /*      maybemaybemaybe
-    public interface IEncryptionDAO();
+    /*
+    public interface IEncryptionDAO();                       //Unimplemented 'IEncryption' interface. Attempting to hash and salt user passwords. 
     {
-        Users HashPass(string password);
-        Users StoredPassword(string password);
+        Users HashPass(string password);                     //Takes the user password and converts it to an encrypted SHA256 string of characters.
+        Users SaltHash(string password);                     //Adds a random string of characters into hashed password for extra security.   
+        Users StoredPassword(string password);               //Compares users entered password to stored password in the database.
     }
     */
 }

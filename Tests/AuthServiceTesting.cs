@@ -14,7 +14,7 @@ public class AuthServiceTest
     [Fact]
     public void TestDuplicateUserRegister()
     {
-        var moqRepo = new Mock<IUserDAO>(); //maybe repo here
+        var moqRepo = new Mock<IUserDAO>();
 
         Users userToAdd = new Users
         {
@@ -37,11 +37,11 @@ public class AuthServiceTest
 
         AuthService service = new AuthService(moqRepo.Object);
        
-        Xunit.Assert.Throws<UsernameNotAvailable>(() => service.RegisterUser(userToAdd));
+        Assert.Throws<UsernameNotAvailable>(() => service.RegisterUser(userToAdd));
         
         moqRepo.Verify(repo => repo.GetUserByUserName(userToAdd.userName), Times.Once());
     }
-    /*
+    
     [Fact]
     public void TestUserNameLoginFail()
     {
@@ -49,27 +49,27 @@ public class AuthServiceTest
 
         Users userToAdd = new Users
         {
-            legalName = "Name",
+            //legalName = "Name",
             userName = "Name123",
             password = "passw0rd!",
-            role = 0
+            //role = 0
         };
 
         Users userToReturn = new Users
         {
-            userId = 1,
-            legalName = "Name",
+            //userId = 1,
+            //legalName = "Name",
             userName = "Name12345",
             password = "passw0rd!",
-            role = 0
+            //role = 0
         };
 
-        moqRepo.Setup(repo => repo.GetUserByUserName(userToAdd.userName)).Returns(userToAdd);//maybe throws here
-        moqRepo.Setup(repo => repo.GetUserByUserName(userToReturn.userName)).Throws<UsernameNotAvailable>();;
+        //moqRepo.Setup(repo => repo.GetUserByUserName(userToAdd.userName)).Returns(userToAdd);//maybe throws here
+        moqRepo.Setup(repo => repo.GetUserByUserName(userToAdd.userName)).Throws<ResourceNotFound>();;
 
         AuthService service = new AuthService(moqRepo.Object);
        
-        Assert.Throws<InvalidCredentials>(() => service.Login(userToAdd));
+        Assert.Throws<ResourceNotFound>(() => service.Login(userToAdd.userName, userToAdd.password));
         
         moqRepo.Verify(repo => repo.GetUserByUserName(userToAdd.userName), Times.Once());
     }
@@ -81,27 +81,27 @@ public class AuthServiceTest
 
         Users userToAdd = new Users
         {
-            legalName = "Name",
+            //legalName = "Name",
             userName = "Name123",
             password = "passw0rd!",
-            role = 0
+            //role = 0
         };
 
         Users userToReturn = new Users
         {
-            userId = 1,
-            legalName = "Name",
+            //userId = 1,
+            //legalName = "Name",
             userName = "Name123",
             password = "p@ssw0rd!",
-            role = 0
+            //role = 0
         };
 
         moqRepo.Setup(repo => repo.GetUserByUserName(userToAdd.userName)).Returns(userToReturn);//maybe throws here
 
         AuthService service = new AuthService(moqRepo.Object);
        
-        Assert.Throws<InvalidCredentials>(() => service.Login(userToAdd));
+        Assert.Throws<InvalidCredentials>(() => service.Login(userToAdd.userName, userToAdd.password));
         
         moqRepo.Verify(repo => repo.GetUserByUserName(userToAdd.userName), Times.Once());
-    }*/    
+    } 
 }

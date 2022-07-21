@@ -25,9 +25,23 @@ public class TicketController
             Tickets queriedTicket = _service.SearchByTicketId(ticketId);
             return Results.Created("/tickets/ticketId/{ticketId}", queriedTicket);
         }
-        catch(InvalidCredentials)
+        catch(Exception)
         {
-            return Results.BadRequest("No ticket with this ticketId exists.");
+            throw;
+        }
+    }
+
+    public IResult TicketStatusSearch(Status status)
+    {
+        Console.WriteLine("Status: " + status);
+        try
+        {   
+            List<Tickets> queriedTicket = _service.SearchByTicketStatus(status);
+            return Results.Ok(queriedTicket);
+        }
+        catch(Exception)
+        {
+            throw;
         }
     }
 
@@ -38,14 +52,15 @@ public class TicketController
             Tickets queriedTicket = _service.SearchByAuthorId(authorId);
             return Results.Created("/tickets/authorId/{authorId}", queriedTicket);
         }
-        catch(InvalidCredentials)
+        catch(Exception)
         {
-            return Results.BadRequest("No ticket with this authorId exists.");
+            throw;
         }
     }
 
     public IResult Update(Tickets ticketUpdate)
     {
+        Console.WriteLine(ticketUpdate.ToString());
         try
         {
             _service.EditTicket(ticketUpdate);

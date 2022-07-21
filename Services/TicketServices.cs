@@ -42,7 +42,7 @@ namespace Services
             }
         }
 
-        public Tickets SearchByTicketId(Status status)
+        public List<Tickets> SearchByTicketStatus(Status status)
         {
             try
             {
@@ -60,9 +60,9 @@ namespace Services
             {
                 return _ticketDAO.CreateTicket(createTicket);
             }
-            catch(InvalidCredentials)
+            catch(Exception)
             {
-                throw new InvalidCredentials();                
+                throw;                
             }
         }
 
@@ -72,9 +72,9 @@ namespace Services
             {
                 return _ticketDAO.UpdateTicket(existingTicket);
             }
-            catch(InvalidCredentials)
+            catch(Exception)
             {
-                throw new InvalidCredentials();                
+                throw;                
             }
         }
     }

@@ -1,65 +1,65 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Models;                             //This page contains the necessary components
-                                              //for the Tickets to be submitted.
-public enum Status
+namespace Models;                              /*This page contains the necessary components for the tickets class
+                                                  to be submitted, edited, and used throughout the application*/
+
+public enum Status                             //Used to define the potential states of submitted tickets.
 {
     Pending,
     Approved,
     Denied
 }
 
-public class Tickets                          //Tickets class...
+public class Tickets                           //Tickets class...
 {
-    [JsonIgnore]
-    public int ticketId { get; set; }         //Unique TicketID number for search and organization.
-    public int authorId { get; set; }         //Name of the creator of the ticket submission.
-    public int resolverId { get; set; }       //Whether the ticket will be approved or not.
-    public string? description { get; set; }   //Description of expenses to be reimbursed.
-    public Status status { get; set; }
+    public int ticketId { get; set; }          //Unique TicketID number for search and organization.
+    public int authorId { get; set; }          //Name of the creator of the ticket submission.
+    public int resolverId { get; set; }        //Whether the ticket will be approved or not.
+    public string? description { get; set; }   //Description of expenses to be reimbursed. Can be left blank if desired.
+    public Status status { get; set; }         //Status provides three options: Pending, Approved, Denied. Default state = pending.
     public string? managerNote { get; set; }   //Manager can ask for more information or provide detail on why a claim may be denied.
     public decimal amount { get; set; }        //Total amount of money to be reimbursed.
 
-    public Tickets() {}
+    public Tickets() {}                        //Empty ticket constructor.
 
-    public Tickets(int ticketId, int authorId, int resolverId, string? description, Status status, string? managerNote, decimal amount)//use for accessing DB          
+    public Tickets(int ticketId, int authorId, int resolverId, string? description, Status status, string? managerNote, decimal amount)//Ticket constructor containing all variables.         
     {
         this.ticketId = ticketId;
         this.authorId = authorId;                            
         this.resolverId = resolverId;                                    
-        this.description = description;
-        this.status = status;                 //   "    "                             
+        this.description = description;        //   "    "
+        this.status = status;                                              
         this.managerNote = managerNote;
         this.amount = amount;                                        
     }
 
-    public Tickets(int authorId, int resolverId, string? description, Status status, string? managerNote, decimal amount)//used for entering information into DB          
+    public Tickets(int authorId, int resolverId, string? description, Status status, string? managerNote, decimal amount)//Ticket constructor with all variables save 'ticketId'.          
     {
         this.authorId = authorId;                            
         this.resolverId = resolverId;                                    
-        this.description = description;       //   "    "
+        this.description = description;        //   "    "
         this.status = status;                             
         this.managerNote = managerNote;
         this.amount = amount;                                       
     }
 
-    public Tickets(int authorIdEntry, string? descriptionEntry, decimal amountEntry)//used for entering information into DB          
+    public Tickets(int authorIdEntry, int resolverId, string? descriptionEntry, decimal amountEntry)//Ticket constructor for submitting a new ticket into the database.        
     {
         this.authorId = authorIdEntry;                                                              
         this.description = descriptionEntry;       //   "    "
         this.amount = amountEntry;                                       
     }
 
-    public Tickets(int ticketId, int resolverId, int status, string? managerNote)//used for entering information into DB          
+    public Tickets(int ticketId, int resolverId, int status, string? managerNote)//Ticket constructor for approval/denial of submitted tickets.          
     {                           
         this.ticketId = ticketId;
-        this.resolverId = resolverId;                                           //   "    "
+        this.resolverId = resolverId;          //   "    "
         this.status = (Status) status;                             
         this.managerNote = managerNote;                                     
     }
 
-    public int StatusToNum(string userEntry)
+    public int StatusToNum(string userEntry)                                     //Casts 'status' as an integer to pass back and forth between database and application.
     {
         switch (userEntry)
         {
@@ -72,7 +72,7 @@ public class Tickets                          //Tickets class...
         }
     }
 
-    public string NumToStatus(int userEntry)
+    public string NumToStatus(int userEntry)                                     //Casts 'status' as a string stating in plain text the current state of the ticket.
     {
         switch (userEntry)
         {
@@ -85,12 +85,12 @@ public class Tickets                          //Tickets class...
         }
     }
     
-    public override string ToString()
+    public override string ToString()                                            //Prints all ticket information as a string to the console.
     {
         return $"TicketId: {this.ticketId}\nAuthorId: {this.authorId}\nResolverId: {this.resolverId}\nStatus: {this.status}\nDescription: {this.description}\n Amount: {this.amount}";
     }
 
-    public Status StringToStatus(string input)
+    public Status StringToStatus(string input)                //Somewhat obsolete, but this and the following dictionaries were my first attempt at casting the status as an integer.
     {
         Dictionary<string,Status> dictStatus = new Dictionary<string, Status>()
         {
@@ -102,7 +102,7 @@ public class Tickets                          //Tickets class...
         return dictStatus[input];
     }
 
-    public string StatusToString(Status input)
+    public string StatusToString(Status input)                                   //Not used in the program, but I left it in for potential updates down the line.
     {
         Dictionary<Status,string> dictStatus = new Dictionary<Status, string>()
         {
