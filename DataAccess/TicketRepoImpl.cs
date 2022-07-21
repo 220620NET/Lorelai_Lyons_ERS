@@ -33,17 +33,15 @@ namespace DataAccess
                 {
                     Tickets ticketTest = new Tickets();
 
-                    if(ticketTest.description == null) //doing seemingly nothing
-                    {
-                        ticketTest.description = "";
-                    }
+                    //if(reader[3] == DBNull.Value) //doing seemingly nothing
+                    //{
+                    //    ticketTest.description = "     ";
+                    //}
 
-                    if(reader[5] == DBNull.Value)
-                    {
-                        ticketTest.managerNote = "";
-                    }
+                    Console.WriteLine(
+                        "Ticket Id: {0} \tAuthor Id: {1}\tResolver Id: {2}\t Description: {3}\tStatus: {4}\tManager Note: {5}\tAmount: {6}",
+                        reader[0], reader[1], reader[2], reader[3], reader["status"], reader[5], reader[6]);//based on number of columns!!!!
 
-                    Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}", reader[0], reader[1], reader[2], reader[3], reader["status"], reader[5], reader[6]);//based on number of columns!!!!
                     ticketsInRepo.Add(new Tickets
                     {
                      ticketId = (int)reader[0],
@@ -51,8 +49,15 @@ namespace DataAccess
                      resolverId = (int)reader[2],
                      description = (string?)reader[3],
                      status = ticketTest.StringToStatus((string)reader["status"]),
+                     managerNote = (string?)reader[5],
                      amount = (decimal)reader[6]
                     });
+
+                    if(reader[5] == DBNull.Value)
+                    {
+                        ticketTest.managerNote = "   ";
+                    }
+                    
                 }
                 reader.Close();                                                          //closees connection to the database. Important!
                 dbConnect.Close();                                                       //closes connection to server
@@ -111,6 +116,7 @@ namespace DataAccess
         public Tickets GetTicketByTicketId(int ticketId)                           //
         {
             string queryString = "select * from Lor_P1.tickets where ticket_Id = @ticket_Id;";
+            List<Tickets> submittedList = new TicketRepository(_connectionFactory).GetAllTickets();
 
             SqlConnection dbConnect = _connectionFactory.GetConnection();
 
@@ -123,27 +129,34 @@ namespace DataAccess
             Tickets functionTicket = new Tickets();
             try
             {
-                dbConnect.Open();                                                        //opens connection to the database
-                SqlDataReader reader = getAuthor.ExecuteReader();                          //Stores the result set of a SQL statement into a variable 
-                while (reader.Read())
-                {
-                    int statNum = functionTicket.StatusToNum((string)reader[4]);
+                dbConnect.Open();
+                if((ticketId > 0) && (ticketId <= submittedList.Count))
+                {                                                        //opens connection to the database
+                    SqlDataReader reader = getAuthor.ExecuteReader();                          //Stores the result set of a SQL statement into a variable 
+                    while (reader.Read())
+                    {
+                        int statNum = functionTicket.StatusToNum((string)reader[4]);
 
-                    //Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}", reader[0], reader[1], reader[2], reader[3], reader["status"], reader[5], reader[6]);//based on number of columns!!!!
-                    Tickets ticket = new Tickets
-                    (
-                     (int)reader[0],
-                     (int)reader[1],
-                     (int)reader[2],
-                     (string)reader[3],
-                     (Status)statNum,
-                     (string)reader[5],
-                     (decimal)reader[6]
-                    );
-                    ticketInstance = ticket;
+                        //Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}", reader[0], reader[1], reader[2], reader[3], reader["status"], reader[5], reader[6]);//based on number of columns!!!!
+                        Tickets ticket = new Tickets
+                        (
+                        (int)reader[0],
+                        (int)reader[1],
+                        (int)reader[2],
+                        (string)reader[3],
+                        (Status)statNum,
+                        (string)reader[5],
+                        (decimal)reader[6]
+                        );
+                        ticketInstance = ticket;
+                    }
+                    reader.Close();                                                          //closees connection to the database. Important!
+                    dbConnect.Close();                                                       //closes connection to server
                 }
-                reader.Close();                                                          //closees connection to the database. Important!
-                dbConnect.Close();                                                       //closes connection to server
+                else
+                {
+                    throw new InvalidCredentials();
+                }
             }
             catch                                                         //If the connection fails
             {
