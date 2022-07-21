@@ -1,11 +1,6 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\DataAccess",
-    "\\ERS_API",
-    "\\Models",
-    "\\Services"
+    ""
   ],
-  "SelectedNode": "\\ERS_API\\ERS_API.csproj",
   "PreviewInSolutionExplorer": false
 }

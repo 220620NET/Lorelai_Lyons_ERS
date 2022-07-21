@@ -1,4 +1,7 @@
-﻿namespace Models;                              //This page contains the necessary components.
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+
+namespace Models;                              //This page contains the necessary components.
 
 public enum Role                               //List of eligible roles.
 {
@@ -8,6 +11,7 @@ public enum Role                               //List of eligible roles.
 
 public class Users                            //Define the user class.
 {
+    [JsonIgnore]
     public int userId { get; set; }           //Unique employee ID number. 
     public string legalName { get; set; }     //Employee's legal name.     
     public string userName { get; set; }      //Unique and custom employee login username.

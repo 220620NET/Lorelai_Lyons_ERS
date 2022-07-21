@@ -1,4 +1,4 @@
-/*                                      //Basic Outline for my hashing/salting
+/*                                    //Basic Outline for my hashing/salting
 using Exceptions;
 using Models;
 using System;
@@ -24,9 +24,7 @@ namespace DataAccess
             var asByteArray = Encoding.Default.GetBytes(password);
             var hashedPass = sha.ComputeHash(asByteArray);
             return Convert.ToBase64String(hashedPassword); 
-        }
-
-        public 
+        } 
 
         public Users StoredPassword(string password)
         {

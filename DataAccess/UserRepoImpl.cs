@@ -15,6 +15,12 @@ namespace DataAccess
             _connectionFactory = factory;
         }
         
+        /// <summary>
+        /// Retrieves and displays a list of all users contained in the users table of Lor_P1 database.
+        /// </summary>
+        /// <param userName="userName"></param>
+        /// <returns>returns(user list)</returns>
+        /// <exception cref="RecordNotFoundException">exception descriptions</exception>
         public List<Users> GetAllUsers()
         {
             List<Users> usersInRepo = new List<Users>();

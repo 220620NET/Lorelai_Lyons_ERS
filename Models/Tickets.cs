@@ -1,3 +1,6 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 namespace Models;                             //This page contains the necessary components
                                               //for the Tickets to be submitted.
 public enum Status
@@ -9,17 +12,18 @@ public enum Status
 
 public class Tickets                          //Tickets class...
 {
+    [JsonIgnore]
     public int ticketId { get; set; }         //Unique TicketID number for search and organization.
     public int authorId { get; set; }         //Name of the creator of the ticket submission.
     public int resolverId { get; set; }       //Whether the ticket will be approved or not.
-    public string description { get; set; }   //Description of expenses to be reimbursed.
+    public string? description { get; set; }   //Description of expenses to be reimbursed.
     public Status status { get; set; }
-    public string managerNote { get; set; }   //Manager can ask for more information or provide detail on why a claim may be denied.
+    public string? managerNote { get; set; }   //Manager can ask for more information or provide detail on why a claim may be denied.
     public decimal amount { get; set; }        //Total amount of money to be reimbursed.
 
     public Tickets() {}
 
-    public Tickets(int ticketId, int authorId, int resolverId, string description, Status status, string managerNote, decimal amount)//use for accessing DB          
+    public Tickets(int ticketId, int authorId, int resolverId, string? description, Status status, string? managerNote, decimal amount)//use for accessing DB          
     {
         this.ticketId = ticketId;
         this.authorId = authorId;                            
@@ -30,7 +34,7 @@ public class Tickets                          //Tickets class...
         this.amount = amount;                                        
     }
 
-    public Tickets(int authorId, int resolverId, string description, Status status, string managerNote, decimal amount)//used for entering information into DB          
+    public Tickets(int authorId, int resolverId, string? description, Status status, string? managerNote, decimal amount)//used for entering information into DB          
     {
         this.authorId = authorId;                            
         this.resolverId = resolverId;                                    
@@ -40,14 +44,14 @@ public class Tickets                          //Tickets class...
         this.amount = amount;                                       
     }
 
-    public Tickets(int authorIdEntry, string descriptionEntry, decimal amountEntry)//used for entering information into DB          
+    public Tickets(int authorIdEntry, string? descriptionEntry, decimal amountEntry)//used for entering information into DB          
     {
         this.authorId = authorIdEntry;                                                              
         this.description = descriptionEntry;       //   "    "
         this.amount = amountEntry;                                       
     }
 
-    public Tickets(int ticketId, int resolverId, int status, string managerNote)//used for entering information into DB          
+    public Tickets(int ticketId, int resolverId, int status, string? managerNote)//used for entering information into DB          
     {                           
         this.ticketId = ticketId;
         this.resolverId = resolverId;                                           //   "    "

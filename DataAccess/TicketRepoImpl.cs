@@ -33,17 +33,26 @@ namespace DataAccess
                 {
                     Tickets ticketTest = new Tickets();
 
+                    if(ticketTest.description == null) //doing seemingly nothing
+                    {
+                        ticketTest.description = "";
+                    }
+
+                    if(reader[5] == DBNull.Value)
+                    {
+                        ticketTest.managerNote = "";
+                    }
+
                     Console.WriteLine("\t{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}", reader[0], reader[1], reader[2], reader[3], reader["status"], reader[5], reader[6]);//based on number of columns!!!!
                     ticketsInRepo.Add(new Tickets
-                    (
-                     (int)reader[0],
-                     (int)reader[1],
-                     (int)reader[2],
-                     (string)reader[3],
-                     ticketTest.StringToStatus((string)reader["status"]),
-                     (string)reader[5],
-                     (decimal)reader[6]
-                    ));
+                    {
+                     ticketId = (int)reader[0],
+                     authorId = (int)reader[1],
+                     resolverId = (int)reader[2],
+                     description = (string?)reader[3],
+                     status = ticketTest.StringToStatus((string)reader["status"]),
+                     amount = (decimal)reader[6]
+                    });
                 }
                 reader.Close();                                                          //closees connection to the database. Important!
                 dbConnect.Close();                                                       //closes connection to server
