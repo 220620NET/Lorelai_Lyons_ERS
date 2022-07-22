@@ -32,3 +32,7 @@ select * from Lor_P1.tickets; --checking to ensure my default inputs worked
 
 drop table Lor_P1.tickets;    --leaving both of these here in case I want to rework them later
 drop table Lor_P1.users;      --will give me just some quick access to dropping and recreating.
+
+select count(*) from Lor_P1.tickets where author_fk = 3;
+
+select * from Lor_P1.tickets where author_fk = 1;

@@ -82,10 +82,9 @@ namespace DataAccess
         /// <returns>Returns instance of created ticket(s) to webAPI.</returns>
         /// <exception cref="ResourceNotFound">Displays if connection to the database is lost.</exception>
 
-        public Tickets GetTicketByAuthorId(int authorId)
+        public List<Tickets> GetTicketByAuthorId(int authorId)
         {
-            
-            //List<Tickets> submittedList = new List<Tickets>(); 
+            List<Tickets> submittedList = new List<Tickets>(); 
 
             string queryString = "select * from Lor_P1.tickets where author_fk = @author_fk;";
 
@@ -99,7 +98,8 @@ namespace DataAccess
 
             try
             {
-                dbConnect.Open();                     
+                dbConnect.Open(); 
+
                 SqlDataReader reader = getAuthor.ExecuteReader();
 
                 while (reader.Read())
@@ -131,7 +131,7 @@ namespace DataAccess
                         ticketInstance.managerNote = (string)reader[5];
                     }
 
-                    //submittedList.Add(ticketInstance);
+                    submittedList.Add(ticketInstance);
                 }
 
                 reader.Close();                                       
@@ -141,7 +141,13 @@ namespace DataAccess
             {
                 throw;
             }
-            return ticketInstance;                                 
+
+            if(submittedList.Count() < 1)
+            {
+                throw new Exception("This user has submitted no tickets.");
+            }
+
+            return submittedList;                                 
         }
 
         /// <summary>
@@ -349,27 +355,13 @@ namespace DataAccess
             changeTicket.Parameters.AddWithValue("@resolver_fk", upTicket.resolverId);
             changeTicket.Parameters.AddWithValue("@status", upTicket.NumToStatus((int)upTicket.status).ToString());
             changeTicket.Parameters.AddWithValue("@manager_note", upTicket.managerNote);
-            /*
-            if(changeTicket.Parameters.AddWithValue("@manager_note", upTicket.managerNote) == DBNull.Value)
-            {
-                upTicket.managerNote = "   ";
-            }
-            else
-            {
-                upTicket.managerNote = changeTicket.Parameters.AddWithValue("@manager_note", upTicket.managerNote);
-            }
-*/
+            
             try
             {
                 dbConnect.Open();
 
                 if((upTicket.ticketId > 0) && (upTicket.ticketId <= updateList.Count))
-                {   /*
-                    if(GetTicketByTicketId(upTicket.ticketId).status == status.Approved || GetTicketByTicketId(upTicket.ticketId).status == status.Denied)
-                    {
-                        return false;
-                    }*/
-                    
+                {                       
                     int rowsAffected = changeTicket.ExecuteNonQuery();                       //Execute non query will be for DML statements.
 
                     dbConnect.Close();                                                       //Closing connection tot he database.

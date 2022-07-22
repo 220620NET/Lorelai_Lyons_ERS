@@ -30,7 +30,7 @@ namespace Services
             }
         }
 
-        public Tickets SearchByAuthorId(int authorId)
+        public List<Tickets> SearchByAuthorId(int authorId)
         {
             try
             {

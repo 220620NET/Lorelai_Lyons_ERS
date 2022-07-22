@@ -49,8 +49,8 @@ public class TicketController
     {
         try
         {   
-            Tickets queriedTicket = _service.SearchByAuthorId(authorId);
-            return Results.Created("/tickets/authorId/{authorId}", queriedTicket);
+            List<Tickets> queriedTicket = _service.SearchByAuthorId(authorId);
+            return Results.Ok(queriedTicket);
         }
         catch(Exception)
         {

@@ -10,7 +10,7 @@ namespace DataAccess
         bool UpdateTicket(Tickets existingTicket);           
         //public void DeleteTicket(Tickets existingTicket);  //Unimplemented 'DeleteTicket' method, that could be reimplemented later.
         Tickets GetTicketByTicketId(int ticketId);           
-        Tickets GetTicketByAuthorId(int authorId);
+        List<Tickets> GetTicketByAuthorId(int authorId);
         List<Tickets> GetTicketByTicketStatus(Status status);
     }
 
