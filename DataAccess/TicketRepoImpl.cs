@@ -214,7 +214,14 @@ namespace DataAccess
             {
                 throw;                                                   //Displays error message
             }
+            if(ticketInstance.ticketId == 0)
+            {
+                throw new Exception("There is no ticket with this ID number in the database.");
+            }
+            else
+            {
             return ticketInstance;
+            }
         }
 
         /// <summary>
