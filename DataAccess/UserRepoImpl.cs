@@ -218,5 +218,42 @@ namespace DataAccess
                 throw new InvalidCredentials("Information provided was not in an acceptable format."); 
             }*/
         }
+
+        public bool DeleteUserByUserId(int userId)
+        {
+            string deleteString = "delete from Lor_P1.users where user_Id = @user_Id;";
+
+            SqlConnection dbConnect = _connectionFactory.GetConnection();
+
+            SqlCommand deleteUser = new SqlCommand(deleteString, dbConnect);
+
+            deleteUser.Parameters.AddWithValue("@user_Id", userId);
+
+            dbConnect.Open();
+
+            try
+            {
+                int rowsAffected = deleteUser.ExecuteNonQuery();
+                
+                if(rowsAffected != 0)                                                    //Returns true provided the values entered were *not* null.
+                {
+                    return true;
+                }
+
+                else
+                {
+                    return false;
+                }
+
+                dbConnect.Close();                                                       //Closing connection tot he database.
+            }
+            
+            catch(Exception)
+            {
+                throw;
+            }
+
+            return false;
+        }
     }
 }

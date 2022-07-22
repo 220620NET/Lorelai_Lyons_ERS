@@ -44,4 +44,17 @@ public class UserController
             return Results.BadRequest("No user with this userId exists.");
         }
     }
+
+    public IResult DeleteAccount(int userId)
+    {
+        try
+        {
+            _service.DeleteUser(userId);
+            return Results.Ok(userId);
+        }
+        catch(ResourceNotFound)
+        {
+            return Results.Conflict("No user with this ID exists.");
+        }
+    }
 }

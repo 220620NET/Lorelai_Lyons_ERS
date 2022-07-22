@@ -84,4 +84,17 @@ public class TicketController
             return Results.Conflict("User with this username already exists.");
         }
     }
+
+    public IResult Delete(int ticketId)
+    {
+        try
+        {
+            _service.DeleteTicket(ticketId);
+            return Results.Ok(ticketId);
+        }
+        catch(ResourceNotFound)
+        {
+            return Results.Conflict("No ticket with this ID exists.");
+        }
+    }
 }

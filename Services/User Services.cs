@@ -41,5 +41,17 @@ namespace Services
                 throw new UsernameNotAvailable();
             }
         }
+
+        public bool DeleteUser(int userId)
+        {
+            try
+            {
+                return _userDAO.DeleteUserByUserId(userId);
+            }
+            catch(Exception)
+            {
+                throw;                
+            }
+        }
     }
 }

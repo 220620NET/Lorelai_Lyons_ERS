@@ -77,5 +77,17 @@ namespace Services
                 throw;                
             }
         }
+
+        public bool DeleteTicket(int ticketId)
+        {
+            try
+            {
+                return _ticketDAO.DeleteTicketByTicketId(ticketId);
+            }
+            catch(Exception)
+            {
+                throw;                
+            }
+        }
     }
 }

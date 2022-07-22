@@ -390,5 +390,42 @@ namespace DataAccess
 
             return false;
         }
+
+        public bool DeleteTicketByTicketId(int ticketId)
+        {
+            string deleteString = "delete from Lor_P1.tickets where ticket_Id = @ticket_Id;";
+
+            SqlConnection dbConnect = _connectionFactory.GetConnection();
+
+            SqlCommand deleteTicket = new SqlCommand(deleteString, dbConnect);
+
+            deleteTicket.Parameters.AddWithValue("@ticket_Id", ticketId);
+
+            dbConnect.Open();
+
+            try
+            {
+                int rowsAffected = deleteTicket.ExecuteNonQuery();
+                
+                if(rowsAffected != 0)                                                    //Returns true provided the values entered were *not* null.
+                {
+                    return true;
+                }
+
+                else
+                {
+                    return false;
+                }
+
+                dbConnect.Close();                                                       //Closing connection tot he database.
+            }
+            
+            catch(Exception)
+            {
+                throw;
+            }
+
+            return false;
+        }
     }
 } 

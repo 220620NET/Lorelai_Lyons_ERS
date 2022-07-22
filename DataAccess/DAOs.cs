@@ -8,7 +8,7 @@ namespace DataAccess
         List<Tickets> GetAllTickets();                       //Method names self explanatory and explained in more detail in 'TicketRepoImpl'
         bool CreateTicket(Tickets createTicket);
         bool UpdateTicket(Tickets existingTicket);           
-        //public void DeleteTicket(Tickets existingTicket);  //Unimplemented 'DeleteTicket' method, that could be reimplemented later.
+        bool DeleteTicketByTicketId(int ticketId);
         Tickets GetTicketByTicketId(int ticketId);           
         List<Tickets> GetTicketByAuthorId(int authorId);
         List<Tickets> GetTicketByTicketStatus(Status status);
@@ -20,7 +20,7 @@ namespace DataAccess
         Users RegisterUser(Users user);
         Users GetUserByUserId(int userId);
         Users GetUserByUserName(string userName);
-        //public void DeleteAccount(Users user);             //Unimplemented 'DeleteTicket' method, that could be reimplemented later.
+        bool DeleteUserByUserId(int userId);      
     }
     /*
     public interface IEncryptionDAO();                       //Unimplemented 'IEncryption' interface. Attempting to hash and salt user passwords. 

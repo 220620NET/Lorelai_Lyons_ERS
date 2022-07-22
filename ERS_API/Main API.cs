@@ -42,13 +42,17 @@ app.MapGet("/tickets/authorId/{authorId}", (int authorId, TicketController contr
 app.MapGet("/tickets/ticketStatus/{ticketStatus}", (Status status, TicketController controller) => controller.TicketStatusSearch(status));
 
 //user features
-app.MapPost("/tickets/update", (Tickets ticket, TicketController controller) => controller.Update(ticket));
+app.MapPut("/tickets/update", (Tickets ticket, TicketController controller) => controller.Update(ticket));
 
 app.MapPost("/tickets/submission", (Tickets ticket, TicketController controller) => controller.Submit(ticket));
 
 app.MapPost("/register", (Users user, AuthController controller) => controller.Register(user));
 
 app.MapPost("/login", (Users user, AuthController controller) => controller.Login(user));   
+
+app.MapDelete("/tickets/delete", (int ticketId, TicketController controller) => controller.Delete(ticketId));
+
+app.MapDelete("/users/delete", (int userId, UserController controller) => controller.DeleteAccount(userId));
 
 app.Run();                                          //Runs the application!!
 
