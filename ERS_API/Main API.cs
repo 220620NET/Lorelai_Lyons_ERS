@@ -58,4 +58,3 @@ app.Run();                                          //Runs the application!!
 
 //INSERT INTO Issues(Title, Content, DateCreated) OUTPUT INSERTED.Id VALUES (@title, @content, @date)
 //ExecuteScalar - returns first column of first row
-
